@@ -25,11 +25,32 @@ public:
 	bool Contains(int x, int y) const;
 	int RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& normal_y) const;
 	void Clickers_force(int degrees);
+
+	void SetSprite(int x, int y, int w, int h) {
+		sprite.h = h;
+		sprite.w = w;
+		sprite.x = x;
+		sprite.y = y;
+	}
+
+	/*void SetSprite(int x, int y, int w, int h){
+
+		spritefx.h = h;
+		spritefx.w = w;
+		spritefx.x = x;
+		spritefx.y = y;
+	}*/
+	SDL_Rect& GetSprite() {
+		return sprite;
+	}
 public:
 	int width, height;
 	b2Body* body;
 	Module* listener;
 	bool IsTrodden = false;
+	SDL_Rect sprite;
+//	SDL_Rect spritefx;
+
 };
 
 // Module --------------------------------------

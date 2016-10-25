@@ -737,11 +737,18 @@ bool ModuleSceneIntro::Start()
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 	
 	//LOAD TEXTURES
+	spritesheet = App->textures->Load("pinball/Images/sprite_sheet.png");
+
+
+
 	background = App->textures->Load("pinball/Images/Ground/background.png");
 	background2 = App->textures->Load("pinball/Images/Ground/frontground.png");
 	ball_texture= App->textures->Load("pinball/Images/Ground/ball.png");
 	_red_shadow = App->textures->Load("pinball/Images/Bonus/_red_shadow.png");
 	fliper_down_left= App->textures->Load("pinball/Images/fliper_down_left.png");
+
+	
+
 
 	//LOAD AUDIOS
 	hitWall_fx = App->audio->LoadFx("pinball/Audio/HitBallWall.wav");
@@ -758,12 +765,25 @@ bool ModuleSceneIntro::Start()
 	//OBJECTS
 	
 	__1_grey = App->physics->CreateChain(0, 0, _1_grey, 22, b2_staticBody);
+	__1_grey->SetSprite(184, 176, 27, 27);
+
 	__3_grey = App->physics->CreateChain(0, 0, _3_grey, 24, b2_staticBody);
+	__3_grey->SetSprite(184, 176, 27, 27);
+
 	__5_grey = App->physics->CreateChain(0, 0, _5_grey, 24, b2_staticBody);
+	__5_grey->SetSprite(184, 176, 27, 27);
+
 	__6_black = App->physics->CreateChainSensor(0, 0, _6_black, 24);
+
 	__7_grey = App->physics->CreateChain(0, 0, _7_grey, 24, b2_staticBody);
+	__7_grey->SetSprite(184, 176, 27, 27);
+
 	__8_grey = App->physics->CreateChain(0, 0, _8_grey, 24, b2_staticBody);
+	__8_grey->SetSprite(184, 176, 27, 27);
+
 	__10_grey = App->physics->CreateChain(0, 0, _10_grey, 24, b2_staticBody);
+	__10_grey->SetSprite(184, 176, 27, 27);
+
 	__12_black = App->physics->CreateChainSensor(0, 0, _12_black, 26);
 	__15_green = App->physics->CreateChain(0, 0, _15_green, 30, b2_staticBody);
 	__16_green = App->physics->CreateChain(0, 0, _16_green, 34, b2_staticBody);
@@ -773,7 +793,10 @@ bool ModuleSceneIntro::Start()
 	__22_boy = App->physics->CreateChainSensor(0, 0, _22_boy, 50);
 	__23_blue = App->physics->CreateChainSensor(0, 0, _23_blue, 32);
 	__24_green_xp = App->physics->CreateChainSensor(0, 0, _24_green_xp, 32);
+
 	__25_grey = App->physics->CreateChain(0, 0, _25_grey, 18, b2_staticBody);
+	__25_grey->SetSprite(184, 176, 27, 27);
+
 	__27_yellow = App->physics->CreateChainSensor(0, 0, _27_yellow, 32);
 	
 	
@@ -805,12 +828,30 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
+	
 	ball->GetPosition(ballx, bally);
 	leftkicker1.body->GetPosition(clicker1x, clicker1y);
 	App->renderer->Blit(background, 0, 0);
 	App->renderer->Blit(fliper_down_left, clicker1x, clicker1y,NULL,1.0f);
 	App->renderer->Blit(ball_texture, ballx, bally, NULL, 1.0f);
 	App->renderer->Blit(background2, 0, 0);
+
+	App->renderer->Blit(spritesheet, 253, 135, &__1_grey->GetSprite());
+
+	App->renderer->Blit(spritesheet, 413, 65, &__3_grey->GetSprite());
+
+	App->renderer->Blit(spritesheet, 335, 133, &__5_grey->GetSprite());
+	
+	App->renderer->Blit(spritesheet, 470, 133, &__7_grey->GetSprite());
+
+	App->renderer->Blit(spritesheet, 503, 236, &__8_grey->GetSprite());
+
+	App->renderer->Blit(spritesheet, 118, 288, &__10_grey->GetSprite());
+
+	App->renderer->Blit(spritesheet, 118, 288, &__10_grey->GetSprite());
+
+	App->renderer->Blit(spritesheet, 466, 752, &__10_grey->GetSprite());
+
 	//Blit the texture of the combo balls:
 	if(ball_2 == true) {
 		ball2->GetPosition(ball2x, ball2y);

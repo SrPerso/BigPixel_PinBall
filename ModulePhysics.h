@@ -26,22 +26,25 @@ public:
 	int RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& normal_y) const;
 	void Clickers_force(int degrees);
 
-	void SetSprite(int x, int y, int w, int h) {
+	void SetSprite(const int&  x,const int & y,const int&  w,const int& h) {
 		sprite.h = h;
 		sprite.w = w;
 		sprite.x = x;
 		sprite.y = y;
 	}
 
-	/*void SetSprite(int x, int y, int w, int h){
+	void SetSpritefx(const int&  x, const int & y, const int&  w, const int& h){
 
 		spritefx.h = h;
 		spritefx.w = w;
 		spritefx.x = x;
 		spritefx.y = y;
-	}*/
+	}
 	SDL_Rect& GetSprite() {
 		return sprite;
+	}
+	SDL_Rect& GetSpritefx() {
+		return spritefx;
 	}
 public:
 	int width, height;
@@ -49,7 +52,7 @@ public:
 	Module* listener;
 	bool IsTrodden = false;
 	SDL_Rect sprite;
-//	SDL_Rect spritefx;
+	SDL_Rect spritefx;
 
 };
 

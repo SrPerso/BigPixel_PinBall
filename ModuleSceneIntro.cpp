@@ -747,8 +747,6 @@ bool ModuleSceneIntro::Start()
 	_red_shadow = App->textures->Load("pinball/Images/Bonus/_red_shadow.png");
 	fliper_down_left= App->textures->Load("pinball/Images/fliper_down_left.png");
 
-	
-
 
 	//LOAD AUDIOS
 	hitWall_fx = App->audio->LoadFx("pinball/Audio/HitBallWall.wav");
@@ -763,42 +761,115 @@ bool ModuleSceneIntro::Start()
 	sensor_ball = App->physics->CreateChainSensor(0, 0, sensor_balls, 6);
 	
 	//OBJECTS
-	
+
+
+
 	__1_grey = App->physics->CreateChain(0, 0, _1_grey, 22, b2_staticBody);
 	__1_grey->SetSprite(184, 176, 27, 27);
+	__1_grey->SetSpritefx(25, 149, 83, 83);
+	
+	__2_orange = App->physics->CreateChain(0, 0, _2_orange, 22, b2_staticBody);//orange
+	__2_orange->SetSprite(811, 94, 68, 47);
+	__2_orange->SetSpritefx(902, 94, 68, 47);
 
 	__3_grey = App->physics->CreateChain(0, 0, _3_grey, 24, b2_staticBody);
 	__3_grey->SetSprite(184, 176, 27, 27);
+	__3_grey->SetSpritefx(25, 149, 83, 83);
+
+	__4_orange = App->physics->CreateChain(0, 0, _4_orange, 22, b2_staticBody);//orange
+	__4_orange->SetSprite(811, 94, 68, 47);
+	__4_orange->SetSpritefx(902, 94, 68, 47);
+
 
 	__5_grey = App->physics->CreateChain(0, 0, _5_grey, 24, b2_staticBody);
 	__5_grey->SetSprite(184, 176, 27, 27);
+	__5_grey->SetSpritefx(25, 149, 83, 83);
 
 	__6_black = App->physics->CreateChainSensor(0, 0, _6_black, 24);
+	__6_black->SetSprite(7, 80, 55, 50);
+	__6_black->SetSpritefx(82, 80, 57, 50);
 
 	__7_grey = App->physics->CreateChain(0, 0, _7_grey, 24, b2_staticBody);
 	__7_grey->SetSprite(184, 176, 27, 27);
+	__7_grey->SetSpritefx(25, 149, 83, 83);
 
 	__8_grey = App->physics->CreateChain(0, 0, _8_grey, 24, b2_staticBody);
 	__8_grey->SetSprite(184, 176, 27, 27);
+	__8_grey->SetSpritefx(25, 149, 83, 83);
+
+	__9_orange = App->physics->CreateChain(0, 0, _9_orange, 22, b2_staticBody);//orange
+	__9_orange->SetSprite(811, 94, 68, 47);
+	__9_orange->SetSpritefx(902, 94, 68, 47);
+
 
 	__10_grey = App->physics->CreateChain(0, 0, _10_grey, 24, b2_staticBody);
 	__10_grey->SetSprite(184, 176, 27, 27);
+	__10_grey->SetSpritefx(25, 149, 83, 83);
+
+	__11_orange = App->physics->CreateChain(0, 0, _11_orange, 22, b2_staticBody);//orange
+	__11_orange->SetSprite(811, 94, 68, 47);
+	__11_orange->SetSpritefx(902, 94, 68, 47);
 
 	__12_black = App->physics->CreateChainSensor(0, 0, _12_black, 26);
+	__12_black->SetSprite(7, 80, 55, 50);
+	__12_black->SetSpritefx(82, 80, 57, 50);
+
+	__13_orange = App->physics->CreateChain(0, 0, _13_orange, 22, b2_staticBody);//orange
+	__13_orange->SetSprite(811, 94, 68, 47);
+	__13_orange->SetSpritefx(902, 94, 68, 47);
+
+	__14_orange = App->physics->CreateChain(0, 0, _14_orange, 22, b2_staticBody);//orange
+	__14_orange->SetSprite(811, 94, 68, 47);
+	__14_orange->SetSpritefx(902, 94, 68, 47);
+
+
 	__15_green = App->physics->CreateChain(0, 0, _15_green, 30, b2_staticBody);
+	__15_green->SetSprite(556, 218, 71, 71);
+	__15_green->SetSpritefx(323, 172, 149, 147);
+
 	__16_green = App->physics->CreateChain(0, 0, _16_green, 34, b2_staticBody);
+	__16_green->SetSprite(556, 218, 71, 71);
+	__16_green->SetSpritefx(323, 172, 149, 147);
+
+	__17_orange = App->physics->CreateChain(0, 0, _17_orange, 22, b2_staticBody);//orange
+	__17_orange->SetSprite(811, 94, 68, 47);
+	__17_orange->SetSpritefx(902, 94, 68, 47);
+
+	__18_orange = App->physics->CreateChain(0, 0, _18_orange, 22, b2_staticBody);//orange
+	__18_orange->SetSprite(811, 94, 68, 47);
+	__18_orange->SetSpritefx(902, 94, 68, 47);
+
 	__19_pink = App->physics->CreateChainSensor(0, 0, _19_pink, 32);
+	__19_pink->SetSprite(15, 4, 70, 60);
+	__19_pink->SetSpritefx(99, 4, 71, 59);
+
 	__20_yellow = App->physics->CreateChainSensor(0, 0, _20_yellow, 32);
+	__20_yellow->SetSprite(347,3, 70, 61);
+	__20_yellow->SetSpritefx(432, 3, 70, 61);
+
 	__21_red = App->physics->CreateChainSensor(0, 0, _21_red, 30);
+	__21_red->SetSprite(846, 4, 71, 60);
+	__21_red->SetSpritefx(924, 5, 71, 61);
+	
 	__22_boy = App->physics->CreateChainSensor(0, 0, _22_boy, 50);
+	__22_boy->SetSprite(508, 80, 62, 67);
+	__22_boy->SetSpritefx(580, 580, 61, 67);
+
 	__23_blue = App->physics->CreateChainSensor(0, 0, _23_blue, 32);
+	__23_blue->SetSprite(685, 5, 71, 61);
+	__23_blue->SetSpritefx(767, 6, 70, 61);
+
 	__24_green_xp = App->physics->CreateChainSensor(0, 0, _24_green_xp, 32);
+	__24_green_xp->SetSprite(183, 4, 71, 60);
+	__24_green_xp->SetSpritefx(267, 4, 71 ,60);
 
 	__25_grey = App->physics->CreateChain(0, 0, _25_grey, 18, b2_staticBody);
 	__25_grey->SetSprite(184, 176, 27, 27);
+	__25_grey->SetSpritefx(25, 149, 83, 83);
 
 	__27_yellow = App->physics->CreateChainSensor(0, 0, _27_yellow, 32);
-	
+	__27_yellow->SetSprite(516, 3, 71, 61);
+	__27_yellow->SetSpritefx(600, 4, 71, 61);
 	
 	
 	//BACKGROUND
@@ -829,37 +900,29 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update()
 {
 	
+	//App->renderer->Blit(spritesheet, 126, 613, &__20_yellow->GetSprite());
+	//ball->SetSprite(677, 228, 10, 10);
+	//ball2->SetSprite(677, 228, 10, 10);
+	//ball3->SetSprite(677, 228, 10, 10);
+
 	ball->GetPosition(ballx, bally);
 	leftkicker1.body->GetPosition(clicker1x, clicker1y);
 	App->renderer->Blit(background, 0, 0);
 	App->renderer->Blit(fliper_down_left, clicker1x, clicker1y,NULL,1.0f);
-	App->renderer->Blit(ball_texture, ballx, bally, NULL, 1.0f);
+	App->renderer->Blit(/*spritesheet*/ball_texture, ballx, bally,/* &ball->GetSprite(),*/ NULL,0,1.f);
 	App->renderer->Blit(background2, 0, 0);
 
-	App->renderer->Blit(spritesheet, 253, 135, &__1_grey->GetSprite());
-
-	App->renderer->Blit(spritesheet, 413, 65, &__3_grey->GetSprite());
-
-	App->renderer->Blit(spritesheet, 335, 133, &__5_grey->GetSprite());
-	
-	App->renderer->Blit(spritesheet, 470, 133, &__7_grey->GetSprite());
-
-	App->renderer->Blit(spritesheet, 503, 236, &__8_grey->GetSprite());
-
-	App->renderer->Blit(spritesheet, 118, 288, &__10_grey->GetSprite());
-
-	App->renderer->Blit(spritesheet, 118, 288, &__10_grey->GetSprite());
-
-	App->renderer->Blit(spritesheet, 466, 752, &__10_grey->GetSprite());
 
 	//Blit the texture of the combo balls:
 	if(ball_2 == true) {
 		ball2->GetPosition(ball2x, ball2y);
-		App->renderer->Blit(ball_texture, ball2x, ball2y, NULL, 1.0f);
+		App->renderer->Blit(/*spritesheet*/ball_texture, ball2x, ball2y,/* &ball->GetSprite(),*/ NULL, 0, 1.f);
+		//App->renderer->Blit(spritesheet, ball2x, ball2y, &ball2->GetSprite(), NULL, 0, 1.f);
 	}
 	if(ball_3== true) {
 		ball3->GetPosition(ball3x, ball3y);
-		App->renderer->Blit(ball_texture, ball3x, ball3y, NULL, 1.0f,20.0f);
+		App->renderer->Blit(/*spritesheet*/ball_texture, ball3x, ball3y,/* &ball->GetSprite(),*/ NULL, 0, 1.f);
+		//App->renderer->Blit(spritesheet, ball3x, ball3y, &ball3->GetSprite(), NULL, 0, 1.f);
 	}
 	//Change the Sensor into a Chain:
 	if (sensored == true) {		
@@ -925,6 +988,10 @@ update_status ModuleSceneIntro::Update()
 	
 	}
 	
+
+
+
+	
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) {
 		
 		leftkicker1.body->Clickers_force(-360);
@@ -978,6 +1045,33 @@ update_status ModuleSceneIntro::Update()
 		if(normal.x != 0.0f)
 			App->renderer->DrawLine(ray.x + destination.x, ray.y + destination.y, ray.x + destination.x + normal.x * 25.0f, ray.y + destination.y + normal.y * 25.0f, 100, 255, 100);
 	}
+
+
+
+	App->renderer->Blit(spritesheet, 253, 135, &__1_grey->GetSprite());
+	App->renderer->Blit(spritesheet, 413, 65, &__3_grey->GetSprite());
+	App->renderer->Blit(spritesheet, 335, 133, &__5_grey->GetSprite());
+	App->renderer->Blit(spritesheet, 398, 116, &__6_black->GetSprite());
+	App->renderer->Blit(spritesheet, 470, 133, &__7_grey->GetSprite());
+	App->renderer->Blit(spritesheet, 503, 236, &__8_grey->GetSprite());
+	App->renderer->Blit(spritesheet, 118, 288, &__10_grey->GetSprite());
+	App->renderer->Blit(spritesheet, 272, 304, &__12_black->GetSprite());
+	App->renderer->Blit(spritesheet, 435, 342, &__15_green->GetSprite());
+	App->renderer->Blit(spritesheet, 290, 468, &__16_green->GetSprite());
+	App->renderer->Blit(spritesheet, 245, 588, &__19_pink->GetSprite());
+	App->renderer->Blit(spritesheet, 126, 613, &__20_yellow->GetSprite());
+	App->renderer->Blit(spritesheet, 373, 619, &__21_red->GetSprite());
+	App->renderer->Blit(spritesheet, 46, 780, &__22_boy->GetSprite());
+	App->renderer->Blit(spritesheet, 178, 779, &__23_blue->GetSprite());
+	App->renderer->Blit(spritesheet, 295, 776, &__24_green_xp->GetSprite());
+	App->renderer->Blit(spritesheet, 466, 752, &__25_grey->GetSprite());
+	//App->renderer->Blit(spritesheet, 434, 778, &__26_girl->GetSprite());
+	App->renderer->Blit(spritesheet, 236, 886, &__27_yellow->GetSprite());
+
+
+	App->renderer->Blit(spritesheet, 83, 372, &__14_orange->GetSprite(), NULL, 0);
+	App->renderer->Blit(spritesheet, 100, 553, &__18_orange->GetSprite(),NULL,40);
+
 
 	return UPDATE_CONTINUE;
 }

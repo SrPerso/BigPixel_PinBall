@@ -33,9 +33,13 @@ public:
 
 	PhysBody* sensor;
 	PhysBody* sensor_ball;
-	// objects
 
-	//p2List<PhysBody*> Objects;
+
+	PhysBody* ball;
+	PhysBody* ball2;
+	PhysBody* ball3;
+
+
 	PhysBody* __1_grey;
 	PhysBody* __2_orange;
 	PhysBody* __3_grey;
@@ -65,6 +69,11 @@ public:
 	PhysBody* __27_yellow;//sensor
 	PhysBody* ball_sensor_stop;
 	//sensor balls
+
+	PhysBody* __background;
+	PhysBody*  __tubetop;
+	PhysBody*  __tubebottom;
+
 	//PhysBody* sensor_ball;
 	int sensor_balls_stop[16] = {
 		88, 133,
@@ -79,14 +88,9 @@ public:
 	//
 	
 	
-	PhysBody* __background;
-	PhysBody*  __tubetop;
-	PhysBody*  __tubebottom;
+	
 
 	bool sensed;
-	PhysBody *ball;
-	PhysBody *ball2;
-	PhysBody *ball3;
 	bool isball1=false;
 	bool isball2=false;
 	bool collisioned = false;
@@ -105,10 +109,11 @@ public:
 	bool forced = false;
 	
 	//back
-	SDL_Texture* spritesheet;
-	SDL_Texture* background;
-	SDL_Texture* background2;
 	SDL_Texture* ball_texture;
+	
+	SDL_Texture* spritesheet;
+	SDL_Texture* background2;
+	SDL_Texture* background;
 	SDL_Texture* _red_shadow;
 	SDL_Texture* fliper_down_left;
 

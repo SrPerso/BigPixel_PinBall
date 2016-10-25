@@ -101,6 +101,7 @@ public:
 	SDL_Texture* background2;
 	SDL_Texture* ball_texture;
 	SDL_Texture* _red_shadow;
+	SDL_Texture* fliper_down_left;
 	//
 	//audio
 	uint hitWall_fx;
@@ -121,10 +122,10 @@ public:
 	int bally;
 	int ball2x;
 	int ball2y;
-
 	int ball3x;
 	int ball3y;
 
+	
 
 
 	

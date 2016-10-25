@@ -23,12 +23,11 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	//LOAD BALLS
+	//Balls to test
 	ball = App->physics->CreateCircle(525, 900, 10, 0.5f);
-	//Plusball = App->physics->CreateCircle(104, 125, 10, 0.5f);
 	ball->listener = this;
 
-	 
+	 //Map:
 	//OBSTACLES:-----------------------------------------------------------
 	
 	//--
@@ -719,12 +718,7 @@ bool ModuleSceneIntro::Start()
 		87,126,
 		130, 108
 	};
-
-	////COMBO BALLS STOPP:
-	
-	
-	
-
+		
 
 	//CAMERA
 	App->renderer->camera.x = App->renderer->camera.y = 0;
@@ -734,6 +728,7 @@ bool ModuleSceneIntro::Start()
 	background2 = App->textures->Load("pinball/Images/Ground/frontground.png");
 	ball_texture= App->textures->Load("pinball/Images/Ground/ball.png");
 	_red_shadow = App->textures->Load("pinball/Images/Bonus/_red_shadow.png");
+	fliper_down_left= App->textures->Load("pinball/Images/fliper_down_left.png");
 
 	//LOAD AUDIOS
 	hitWall_fx = App->audio->LoadFx("pinball/Audio/HitBallWall.wav");
@@ -750,23 +745,15 @@ bool ModuleSceneIntro::Start()
 	//OBJECTS
 	
 	__1_grey = App->physics->CreateChain(0, 0, _1_grey, 22, b2_staticBody);
-	//__2_orange = App->physics->CreateChain(0, 0, _2_orange, 26, b2_staticBody);
 	__3_grey = App->physics->CreateChain(0, 0, _3_grey, 24, b2_staticBody);
-	//__4_orange = App->physics->CreateChain(0, 0, _4_orange, 24, b2_staticBody);
 	__5_grey = App->physics->CreateChain(0, 0, _5_grey, 24, b2_staticBody);
 	__6_black = App->physics->CreateChainSensor(0, 0, _6_black, 24);
 	__7_grey = App->physics->CreateChain(0, 0, _7_grey, 24, b2_staticBody);
 	__8_grey = App->physics->CreateChain(0, 0, _8_grey, 24, b2_staticBody);
-	//__9_orange = App->physics->CreateChain(0, 0, _9_orange, 28, b2_staticBody);
 	__10_grey = App->physics->CreateChain(0, 0, _10_grey, 24, b2_staticBody);
-	//__11_orange = App->physics->CreateChain(0, 0, _11_orange, 32, b2_staticBody);
 	__12_black = App->physics->CreateChainSensor(0, 0, _12_black, 26);
-	//__13_orange = App->physics->CreateChain(0, 0, _13_orange, 26, b2_staticBody);
-	//__14_orange = App->physics->CreateChain(0, 0, _14_orange, 26, b2_staticBody);
 	__15_green = App->physics->CreateChain(0, 0, _15_green, 30, b2_staticBody);
 	__16_green = App->physics->CreateChain(0, 0, _16_green, 34, b2_staticBody);
-	//__17_orange = App->physics->CreateChain(0, 0, _17_orange, 22, b2_staticBody);
-	//__18_orange = App->physics->CreateChain(0, 0, _18_orange, 26, b2_staticBody);
 	__19_pink = App->physics->CreateChainSensor(0, 0, _19_pink, 32);
 	__20_yellow = App->physics->CreateChainSensor(0, 0, _20_yellow, 32);
 	__21_red = App->physics->CreateChainSensor(0, 0, _21_red, 30);
@@ -774,13 +761,10 @@ bool ModuleSceneIntro::Start()
 	__23_blue = App->physics->CreateChainSensor(0, 0, _23_blue, 32);
 	__24_green_xp = App->physics->CreateChainSensor(0, 0, _24_green_xp, 32);
 	__25_grey = App->physics->CreateChain(0, 0, _25_grey, 18, b2_staticBody);
-	//__26_girl= App->physics->CreateChainSensor(0, 0, _26_girl, 42);
 	__27_yellow = App->physics->CreateChainSensor(0, 0, _27_yellow, 32);
 	
 	
-	/*__21_red->listener->Start();
-	__21_red->listener->App->audio->PlayFx(bonus_fx,0);*/
-
+	
 	//BACKGROUND
 	__tubebottom = App->physics->CreateChain(0, 0, _tubebottom, 66, b2_staticBody);
 	__tubetop = App->physics->CreateChain(0, 0, _tubetop, 98, b2_staticBody);
@@ -808,8 +792,10 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
-	ball->GetPosition(ballx, bally);	
+	ball->GetPosition(ballx, bally);
+	
 	App->renderer->Blit(background, 0, 0);
+	App->renderer->Blit(fliper_down_left, 0,0 );
 	App->renderer->Blit(ball_texture, ballx, bally, NULL, 1.0f);
 	App->renderer->Blit(background2, 0, 0);
 	//Blit the texture of the combo balls:
@@ -885,7 +871,10 @@ update_status ModuleSceneIntro::Update()
 	
 	}
 	
-
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) {
+		
+		
+	}
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		ray_on = !ray_on;

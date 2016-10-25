@@ -52,7 +52,7 @@ public:
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size, b2BodyType type);
 	PhysBody* CreateChainSensor(int x, int y, int* points, int size);
-
+	PhysBody* CreateSensorBall(int x, int y, int* points, int size, bool sensor);
 	void DestroyBody(b2Body* body);
 
 	// b2ContactListener ---

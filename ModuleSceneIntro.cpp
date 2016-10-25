@@ -716,9 +716,15 @@ bool ModuleSceneIntro::Start()
 	//COMBO BALLS SENSOR
 	int sensor_balls[6] = {
 		87, 127,
-		97,117,
+		87,126,
 		130, 108
 	};
+
+	////COMBO BALLS STOPP:
+	
+	
+	
+
 
 	//CAMERA
 	App->renderer->camera.x = App->renderer->camera.y = 0;
@@ -726,7 +732,7 @@ bool ModuleSceneIntro::Start()
 	//LOAD TEXTURES
 	background = App->textures->Load("pinball/Images/Ground/background.png");
 	background2 = App->textures->Load("pinball/Images/Ground/frontground.png");
-	ball_texture== App->textures->Load("pinball/Images/1.png");
+	ball_texture= App->textures->Load("pinball/Images/Ground/ball.png");
 
 	//LOAD AUDIOS
 	hitWall_fx = App->audio->LoadFx("pinball/Audio/HitBallWall.wav");
@@ -779,9 +785,11 @@ bool ModuleSceneIntro::Start()
 	__tubetop = App->physics->CreateChain(0, 0, _tubetop, 98, b2_staticBody);
 	__background = App->physics->CreateChain(0, 0, _background, 150, b2_staticBody);
 
-
 	
-
+	//sensor combo balls
+	
+	ball_sensor_stop = App->physics->CreateSensorBall(20, 40, sensor_balls_stop, 6, true);
+	
 
 	App->audio->PlayFx(game_bso,20);
 
@@ -802,11 +810,33 @@ update_status ModuleSceneIntro::Update()
 	ball->GetPosition(ballx, bally);
 	App->renderer->Blit(background, 0, 0);
 	App->renderer->Blit(background2, 0, 0);
-	App->renderer->Blit(ball_texture,ballx,bally);
+	App->renderer->Blit(ball_texture,ballx,bally,NULL,1.0f);
 
+	if (isball1 == true) {
+		ball_sensor_stop->body->GetFixtureList()->SetSensor(false);
+		collisioned = true; 
+		CurrentTime = SDL_GetTicks();
+		if (CurrentTime > LastTime + 2000) {
+			ball3 = App->physics->CreateCircle(110, 140, 10, 0.5f);
+			ball3->listener = this;
 
-	//DESTROY BALLS
+			isball1 = false;
+			isball2 = true;
+			LastTime = SDL_GetTicks();
+		}
+	}
+	if(isball2 == true){
+		CurrentTime = SDL_GetTicks();
+		if (CurrentTime > LastTime+2000) {
+			ball3 = App->physics->CreateCircle(110, 140, 10, 0.5f);
+			ball_sensor_stop->body->GetFixtureList()->SetSensor(true);
+			ball3->listener = this;		
+			collisioned = false;
+			isball2 = false;		
+		}
+	}
 	
+	//DESTROY BALLS	
 
 	if ( bally >= 1010) {
 		App->physics->DestroyBody(ball->body);
@@ -886,51 +916,45 @@ update_status ModuleSceneIntro::Update()
 	return UPDATE_CONTINUE;
 }
 
-void ModuleSceneIntro::OnCollision(PhysBody* bodyB, PhysBody* bodyA)
-{
-	//App->audio->PlayFx(bonus_fx);
+	void ModuleSceneIntro::OnCollision(PhysBody* bodyB, PhysBody* bodyA)
+	{
+		//App->audio->PlayFx(bonus_fx);
 
-	if (bodyA == __19_pink || bodyA == __20_yellow || bodyA == __21_red || bodyA == __22_boy ||
-		bodyA == __23_blue || bodyA == __24_green_xp || bodyA == __27_yellow ||/*bodyA == __26_girl ||*/bodyA == __27_yellow) {
-		
-		App->audio->PlayFx(bird_fx,0);//play the bonus 
-		//añadir 100 puntos
-		if (__6_black->IsTrodden == true){}
+		if (bodyA == __19_pink || bodyA == __20_yellow || bodyA == __21_red || bodyA == __22_boy ||
+			bodyA == __23_blue || bodyA == __24_green_xp || bodyA == __27_yellow ||/*bodyA == __26_girl ||*/bodyA == __27_yellow) {
 
-	}
-	if (bodyA == __1_grey || bodyA == __3_grey || bodyA == __5_grey ||
-		bodyA == __7_grey || bodyA == __8_grey || bodyA == __10_grey ||
-		bodyA == __25_grey || bodyA == __15_green || bodyA == __16_green) {
+			App->audio->PlayFx(bird_fx, 0);//play the bonus 
+			//añadir 100 puntos
+			if (__6_black->IsTrodden == true) {}
 
-		App->audio->PlayFx(gg_fx);//play the bonus 							
+		}
+		if (bodyA == __1_grey || bodyA == __3_grey || bodyA == __5_grey ||
+			bodyA == __7_grey || bodyA == __8_grey || bodyA == __10_grey ||
+			bodyA == __25_grey || bodyA == __15_green || bodyA == __16_green) {
 
-	}
-	if (bodyA == sensor_ball) {
-		//primero hacer blit de el trozo de textura
-		uint balls_combo = 1;
-		if (destroyed == false) {
-			App->physics->DestroyBody(ball->body);
-			ball = nullptr;
-			destroyed == true;
-			while (balls_combo < 3) {
+			App->audio->PlayFx(gg_fx);//play the bonus 							
+
+		}
+		if (collisioned == false) {
+			if (bodyA == sensor_ball) {
+				//primero hacer blit de el trozo de textura
 				App->audio->PlayFx(combo_balls, 0);
-				ball = App->physics->CreateCircle(100, 120, 10, 0.5f);
-				ball->listener = this;//
-				uint LastTime = 0, CurrentTime;
-				CurrentTime = SDL_GetTicks();
-				if (CurrentTime > LastTime + 1000) {
-					ball = App->physics->CreateCircle(100, 120, 10, 0.5f);
-					ball->listener = this;//
-					balls_combo++;
-				}
+				LastTime = SDL_GetTicks();				
+				sensored = true;				
+				isball1 = true;
+				LastTime = SDL_GetTicks();
+				
+
 			}
+
+
 		}
 		
 	}
 
 
 
-	}
+	
 
 	//if (bodyA == __2_orange || bodyA == __4_orange || bodyA == __9_orange ||
 	//	bodyA == __11_orange || bodyA == __13_orange || bodyA == __14_orange ||

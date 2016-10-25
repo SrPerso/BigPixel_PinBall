@@ -55,6 +55,16 @@ public:
 	PhysBody* __25_grey;
 	//PhysBody* __26_girl;//sensor
 	PhysBody* __27_yellow;//sensor
+	PhysBody* ball_sensor_stop;
+	//sensor balls
+	//PhysBody* sensor_ball;
+	int sensor_balls_stop[6] = {
+		87, 127,
+		87,126,
+		130, 108
+	};
+	//
+	
 	
 	PhysBody* __background;
 	PhysBody*  __tubetop;
@@ -62,6 +72,15 @@ public:
 
 	bool sensed;
 	PhysBody *ball;
+	PhysBody *ball2;
+	PhysBody *ball3;
+	bool isball1=false;
+	bool isball2=false;
+	bool collisioned = false;
+	bool sensored = false;
+	//bool sensorss = false;
+
+	uint LastTime = 0, CurrentTime;
 
 	//TITLE
 	uint score, ball_points;
@@ -91,6 +110,8 @@ public:
 
 	int ballx;
 	int bally;
+
+
 
 	
 };

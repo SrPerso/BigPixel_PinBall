@@ -24,7 +24,7 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 
 	//LOAD BALLS
-	ball = App->physics->CreateCircle(520, 900, 10, 0.5f);
+	ball = App->physics->CreateCircle(525, 900, 10, 0.5f);
 	//Plusball = App->physics->CreateCircle(104, 125, 10, 0.5f);
 	ball->listener = this;
 
@@ -807,11 +807,20 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
-	ball->GetPosition(ballx, bally);
+	ball->GetPosition(ballx, bally);	
 	App->renderer->Blit(background, 0, 0);
+	App->renderer->Blit(ball_texture, ballx, bally, NULL, 1.0f);
 	App->renderer->Blit(background2, 0, 0);
-	App->renderer->Blit(ball_texture,ballx,bally,NULL,1.0f);
-
+	//Blit the texture of the combo balls:
+	if(ball_2 == true) {
+		ball2->GetPosition(ball2x, ball2y);
+		App->renderer->Blit(ball_texture, ball2x, ball2y, NULL, 1.0f);
+	}
+	if(ball_3== true) {
+		ball3->GetPosition(ball3x, ball3y);
+		App->renderer->Blit(ball_texture, ball3x, ball3y, NULL, 1.0f);
+	}
+	//Change the Sensor into a Chain:
 	if (sensored == true) {		
 		ball_sensor_stop->body->GetFixtureList()->SetSensor(false);		
 		CurrentTime = SDL_GetTicks();
@@ -820,22 +829,25 @@ update_status ModuleSceneIntro::Update()
 			sensored = false;
 		}
 	}
+	//Creating the first ball of combo
 	if (isball1 == true) {		
 		collisioned = true; 
 		CurrentTime = SDL_GetTicks();
 		if (CurrentTime > LastTime + 2000) {
-			ball3 = App->physics->CreateCircle(130, 160, 10, 0.5f);
-			ball3->listener = this;
-
+			ball2 = App->physics->CreateCircle(130, 160, 10, 0.5f);
+			ball_2 = true;			
+			ball2->listener = this;
 			isball1 = false;
 			isball2 = true;
 			LastTime = SDL_GetTicks();
 		}
 	}
+	//Creating the second ball of combo
 	if(isball2 == true){
 		CurrentTime = SDL_GetTicks();
 		if (CurrentTime > LastTime+1000) {
-			ball3 = App->physics->CreateCircle(130, 160, 10, 0.5f);			
+			ball3 = App->physics->CreateCircle(130, 160, 10, 0.5f);
+			ball_3 = true;			
 			ball3->listener = this;		
 			collisioned = false;
 			isball2 = false;	
@@ -844,7 +856,22 @@ update_status ModuleSceneIntro::Update()
 	}
 	
 	//DESTROY BALLS	
-
+	if (ball_2 == true) {
+		if (ball2y >= 1010) {
+			App->physics->DestroyBody(ball2->body);
+			ball2 = nullptr;
+			App->audio->PlayFx(dead_fx);
+			ball_2 = false;
+		}
+	}
+	if (ball_3 == true) {
+		if (ball3y >= 1010) {
+			App->physics->DestroyBody(ball3->body);
+			ball3 = nullptr;
+			App->audio->PlayFx(dead_fx);
+			ball_3 = false;
+		}
+	}
 	if ( bally >= 1010) {
 		App->physics->DestroyBody(ball->body);
 		ball = nullptr;

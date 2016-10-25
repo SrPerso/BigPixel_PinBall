@@ -70,28 +70,46 @@ bool ModulePhysics::Start()
 	//CLICKER FOR JOINT:
 	
 	b2Vec2 obstacles[8];
+
 	
-	//obstacles[0].Set(0.0, 0.0);
 	obstacles[0].Set(0.0, 0.0);
-	obstacles[1].Set(0.431159, 0.974879);
-	obstacles[2].Set(0.432971, 0.980676);
-	obstacles[3].Set(0.436594, 0.976812);
-	obstacles[4].Set(0.436594, 0.972947);
-	obstacles[5].Set(0.436594, 0.968116);
-	obstacles[6].Set(0.364130, 0.927536);
-	//obstacles[7].Set(0.344203, 0.926570);
+	obstacles[1].Set(0.344, 0.927);
+	obstacles[2].Set(0.360, 0.927);
+	obstacles[3].Set(0.438, 0.967);
+	obstacles[4].Set(0.436, 0.978);
+	obstacles[5].Set(0.420, 0.982);
+	obstacles[6].Set(0.326, 0.953);
+	obstacles[7].Set(0.322, 0.941);
+
+	/*0.900362f, 0.573913f,
+		0.884058f, 0.575845f,
+		0.860507f, 0.616425f,
+		0.867754f, 0.623188f,
+		0.882246f, 0.622222f,
+		0.920290f, 0.582609f,
+		0.911232f, 0.575845f
+};*/
 	
+	/*0.329710f, 0.933333f,
+		0.344203f, 0.927536f,
+		0.360507f, 0.927536f,
+		0.438406f, 0.967150f,
+		0.436594f, 0.978744f,
+		0.420290f, 0.982609f,
+		0.326087f, 0.953623f,
+		0.322464f, 0.941063f*/
 
 
+	App->physics->CreatePolygons(obstacles,8, b2_dynamicBody, 150, 500, 0.05);
 	
-	
+	/*
 	b2BodyDef clickerdef;
 	clickerdef.type = b2_dynamicBody;
 	clickerdef.position.Set(3.8f, 19.4f);
 	b2Body *clicker = world->CreateBody(&clickerdef);
 	
 	b2PolygonShape clickershape;
-	clickershape.Set(obstacles, 7);
+	clickershape.Set(obstacles, 8);
 	b2FixtureDef myFixtureDef22;
 	myFixtureDef22.shape = &clickershape;
 	//myFixtureDef22.density = 1;
@@ -107,7 +125,7 @@ bool ModulePhysics::Start()
 	revoluteJointDef.localAnchorB = circle->GetLocalCenter();
 	revoluteJointDef.collideConnected = true;
 
-	world->CreateJoint(&revoluteJointDef);
+	world->CreateJoint(&revoluteJointDef);*/
 	
 	
 	//TRIANGLES-----------------------------------------------------------------
@@ -608,4 +626,28 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 
 void ModulePhysics::DestroyBody(b2Body* body) {
 	world->DestroyBody(body);
+}
+PhysBody* ModulePhysics::CreatePolygons(b2Vec2* vertices1, int count1, b2BodyType type, int x, int y, float rest)
+{
+	b2BodyDef polygonbody;
+	polygonbody.type = type;
+	polygonbody.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+
+	b2Body* b = world->CreateBody(&polygonbody);
+
+	b2PolygonShape polygon1shape;
+	polygon1shape.Set(vertices1, count1);
+	b2FixtureDef polygon1fix;
+	polygon1fix.density = 1.0f;
+	polygon1fix.restitution = rest;
+	polygon1fix.shape = &polygon1shape;
+	b->CreateFixture(&polygon1fix);
+
+	
+
+	PhysBody* pbody = new PhysBody();
+	pbody->body = b;
+	b->SetUserData(pbody);
+
+	return pbody;
 }

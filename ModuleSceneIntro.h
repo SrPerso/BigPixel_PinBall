@@ -84,6 +84,8 @@ public:
 	bool collisioned = false;
 	bool sensored = false;
 	bool one = false;
+	bool ball_2 = false;
+	bool ball_3 = false;
 	//bool sensorss = false;
 
 	uint LastTime = 0, CurrentTime;
@@ -116,6 +118,11 @@ public:
 
 	int ballx;
 	int bally;
+	int ball2x;
+	int ball2y;
+
+	int ball3x;
+	int ball3y;
 
 
 

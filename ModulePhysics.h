@@ -53,6 +53,7 @@ public:
 	PhysBody* CreateChain(int x, int y, int* points, int size, b2BodyType type);
 	PhysBody* CreateChainSensor(int x, int y, int* points, int size);
 	PhysBody* CreateSensorBall(int x, int y, int* points, int size, bool sensor);
+	PhysBody* CreatePolygons(b2Vec2* vertices1, int count1, b2BodyType type, int x, int y, float Rest);
 	void DestroyBody(b2Body* body);
 
 	// b2ContactListener ---

@@ -3,7 +3,14 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "Globals.h"
+struct Object {
 
+	SDL_Rect section;
+	PhysBody* body;
+	uint fx;
+
+	Object() : body(NULL) {}
+};
 class PhysBody;
 
 class ModuleSceneIntro : public Module
@@ -124,8 +131,23 @@ public:
 	int ball2y;
 	int ball3x;
 	int ball3y;
+	int clicker1x;
+	int clicker1y;
 
-	
+	//
+	Object ball_obj;
+
+	Object leftkicker1;
+	PhysBody* leftwheel1;
+
+	Object rightkicker1;
+	PhysBody* rightwheel1;
+
+	Object leftkicker2;
+	PhysBody* leftwhee21;
+
+	Object rightkicker2;
+	PhysBody* rightwheel2;
 
 
 	

@@ -14,6 +14,7 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 	return true;
+
 }
 
 // Unload assets

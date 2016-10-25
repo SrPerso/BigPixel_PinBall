@@ -13,7 +13,7 @@
 #define METERS_TO_PIXELS(m) ((int) floor(PIXELS_PER_METER * m))
 #define PIXEL_TO_METERS(p)  ((float) METER_PER_PIXEL * p)
 
-// Small class to return to other modules to track position and rotation of physics bodies
+
 class PhysBody
 {
 public:
@@ -24,7 +24,7 @@ public:
 	float GetRotation() const;
 	bool Contains(int x, int y) const;
 	int RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& normal_y) const;
-	
+	void Clickers_force(int degrees);
 public:
 	int width, height;
 	b2Body* body;
@@ -47,22 +47,25 @@ public:
 	bool mousein=false;
 	b2Body* mousebody= nullptr;
 
-	PhysBody* CreateCircle(int x, int y, int radius, float Rest);
+	PhysBody* CreateCircle(int x, int y, int radius, float Rest, bool _bullet, b2BodyType type);
 	PhysBody* CreateRectangle(int x, int y, int width, int height);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size, b2BodyType type);
 	PhysBody* CreateChainSensor(int x, int y, int* points, int size);
 	PhysBody* CreateSensorBall(int x, int y, int* points, int size, bool sensor);
 	PhysBody* CreatePolygon(b2Vec2* vertices1, int count1, b2BodyType type, int x, int y, float Rest);
+	void CreateRevoluteJoint(b2Body* bodyA, b2Body* bodyB, int upperangle, int lowerangle, int pivot_x, int pivot_y);
 	void DestroyBody(b2Body* body);
 
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
 	b2Body* ground;
-	//-------------
+	
+
 	p2List<b2RevoluteJoint*> paddleList;
 	
 	b2Body* b;
+	
 	
 
 private:

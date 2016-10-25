@@ -24,9 +24,22 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 
 	//Balls to test
-	ball = App->physics->CreateCircle(525, 900, 10, 0.5f);
+	ball = App->physics->CreateCircle(525, 900, 10, 0.5f, false,b2_dynamicBody);
 	ball->listener = this;
 
+	b2Vec2 obstacles[8];
+	obstacles[0].Set(PIXEL_TO_METERS(0), PIXEL_TO_METERS(0));
+	obstacles[1].Set(PIXEL_TO_METERS(6), PIXEL_TO_METERS(-5));//y--
+	obstacles[2].Set(PIXEL_TO_METERS(18), PIXEL_TO_METERS(-5));//y-
+	obstacles[3].Set(PIXEL_TO_METERS(59), PIXEL_TO_METERS(35));
+	obstacles[4].Set(PIXEL_TO_METERS(57), PIXEL_TO_METERS(45));
+	obstacles[5].Set(PIXEL_TO_METERS(44), PIXEL_TO_METERS(44));//y--
+	obstacles[6].Set(PIXEL_TO_METERS(0), PIXEL_TO_METERS(19));
+	obstacles[7].Set(PIXEL_TO_METERS(-3), PIXEL_TO_METERS(9));
+
+	leftkicker1.body = App->physics->CreatePolygon(obstacles, 8, b2_dynamicBody, 180,950, 0.05f);
+	leftwheel1 = App->physics->CreateCircle(200, 975, 9, 0, false, b2_staticBody);
+	App->physics->CreateRevoluteJoint(leftkicker1.body->body, leftwheel1->body, 45, -5, 13, 10);
 	 //Map:
 	//OBSTACLES:-----------------------------------------------------------
 	
@@ -793,9 +806,9 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update()
 {
 	ball->GetPosition(ballx, bally);
-	
+	leftkicker1.body->GetPosition(clicker1x, clicker1y);
 	App->renderer->Blit(background, 0, 0);
-	App->renderer->Blit(fliper_down_left, 0,0 );
+	App->renderer->Blit(fliper_down_left, clicker1x, clicker1y,NULL,1.0f);
 	App->renderer->Blit(ball_texture, ballx, bally, NULL, 1.0f);
 	App->renderer->Blit(background2, 0, 0);
 	//Blit the texture of the combo balls:
@@ -805,7 +818,7 @@ update_status ModuleSceneIntro::Update()
 	}
 	if(ball_3== true) {
 		ball3->GetPosition(ball3x, ball3y);
-		App->renderer->Blit(ball_texture, ball3x, ball3y, NULL, 1.0f);
+		App->renderer->Blit(ball_texture, ball3x, ball3y, NULL, 1.0f,20.0f);
 	}
 	//Change the Sensor into a Chain:
 	if (sensored == true) {		
@@ -821,7 +834,7 @@ update_status ModuleSceneIntro::Update()
 		collisioned = true; 
 		CurrentTime = SDL_GetTicks();
 		if (CurrentTime > LastTime + 2000) {
-			ball2 = App->physics->CreateCircle(130, 160, 10, 0.5f);
+			ball2 = App->physics->CreateCircle(130, 160, 10, 0.5f, false, b2_dynamicBody);
 			App->renderer->Blit(background2, 0, 0);
 			ball_2 = true;			
 			ball2->listener = this;
@@ -834,7 +847,7 @@ update_status ModuleSceneIntro::Update()
 	if(isball2 == true){
 		CurrentTime = SDL_GetTicks();
 		if (CurrentTime > LastTime+1000) {
-			ball3 = App->physics->CreateCircle(130, 160, 10, 0.5f);
+			ball3 = App->physics->CreateCircle(130, 160, 10, 0.5f, false, b2_dynamicBody);
 			App->renderer->Blit(background2, 0, 0);
 			ball_3 = true;			
 			ball3->listener = this;			
@@ -865,7 +878,7 @@ update_status ModuleSceneIntro::Update()
 	if ( bally >= 1010) {
 		App->physics->DestroyBody(ball->body);
 		ball = nullptr;
-		ball = App->physics->CreateCircle(520, 900, 10, 0.5f);
+		ball = App->physics->CreateCircle(520, 900, 10, 0.5f, false, b2_dynamicBody);
 		ball->listener = this;
 		App->audio->PlayFx(dead_fx);	
 	
@@ -873,7 +886,7 @@ update_status ModuleSceneIntro::Update()
 	
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) {
 		
-		
+		leftkicker1.body->Clickers_force(-360);
 	}
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
@@ -884,7 +897,7 @@ update_status ModuleSceneIntro::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
-		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 11,0.5f));
+		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 11,0.5f, false, b2_dynamicBody));
 		circles.getLast()->data->listener = this;
 	}
 
@@ -895,7 +908,7 @@ update_status ModuleSceneIntro::Update()
 			
 	}
 	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN) {
-		ball = App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 10, 0.5f);
+		ball = App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 10, 0.5f, false, b2_dynamicBody);
 	}
 	
 

@@ -53,7 +53,7 @@ bool ModulePhysics::Start()
 	fixture.shape = &shape;
 	big_ball->CreateFixture(&fixture);*/
 	//CIRCLE FOR JOINT
-	b2Body *circle;
+	/*b2Body *circle;
 	b2BodyDef circledef;
 	circledef.type = b2_staticBody;
 	circledef.position.Set(3.9, 19.5);
@@ -88,17 +88,9 @@ bool ModulePhysics::Start()
 		13, 30
 	};*/
 	//----
-b2Vec2 obstacles[8];
-	obstacles[0].Set(PIXEL_TO_METERS(0), PIXEL_TO_METERS(0));
-	obstacles[1].Set(PIXEL_TO_METERS(6), PIXEL_TO_METERS(-5));//y--
-	obstacles[2].Set(PIXEL_TO_METERS(18), PIXEL_TO_METERS(-5));//y-
-	obstacles[3].Set(PIXEL_TO_METERS(59), PIXEL_TO_METERS(35));
-	obstacles[4].Set(PIXEL_TO_METERS(57), PIXEL_TO_METERS(45));
-	obstacles[5].Set(PIXEL_TO_METERS(44), PIXEL_TO_METERS(44));//y--
-	obstacles[6].Set(PIXEL_TO_METERS(0), PIXEL_TO_METERS(19));
-	obstacles[7].Set(PIXEL_TO_METERS(-3), PIXEL_TO_METERS(9));
 
-	
+
+	/*
 	b2BodyDef polygonbody;
 	polygonbody.type = b2_dynamicBody;
 	polygonbody.position.Set(3.6, 19.3);
@@ -126,7 +118,7 @@ b2Vec2 obstacles[8];
 	revoluteJointDef.collideConnected = true;
 	revoluteJointDef.upperAngle = DEGTORAD * 0;
 	revoluteJointDef.lowerAngle = DEGTORAD * -23;
-	world->CreateJoint(&revoluteJointDef);
+	world->CreateJoint(&revoluteJointDef);*/
 	//_-----------------
 	
 	//TRIANGLES-----------------------------------------------------------------
@@ -234,10 +226,11 @@ update_status ModulePhysics::PreUpdate()
 	return UPDATE_CONTINUE;
 }
 
-PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, float Rest)
+PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, float Rest, bool _bullet, b2BodyType type)
 {
 	b2BodyDef body;
-	body.type = b2_dynamicBody;
+	body.type = type;
+	body.bullet = _bullet;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
 	b2Body* b = world->CreateBody(&body);
@@ -613,6 +606,7 @@ int PhysBody::RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& no
 	return ret;
 }
 
+
 void ModulePhysics::BeginContact(b2Contact* contact)
 {
 	PhysBody* physA = (PhysBody*)contact->GetFixtureA()->GetBody()->GetUserData();
@@ -625,6 +619,9 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 		physB->listener->OnCollision(physB, physA);
 }
 
+void PhysBody::Clickers_force(int degrees) {
+	body->ApplyAngularImpulse(DEGTORAD*degrees, true);
+}
 void ModulePhysics::DestroyBody(b2Body* body) {
 	world->DestroyBody(body);
 }
@@ -651,4 +648,17 @@ PhysBody* ModulePhysics::CreatePolygon(b2Vec2* vertices1, int count1, b2BodyType
 	body->SetUserData(p_body);
 
 	return p_body;
+}
+void ModulePhysics::CreateRevoluteJoint(b2Body* bodyA, b2Body* bodyB, int upperangle, int lowerangle, int pivot_x, int pivot_y) {
+
+	b2RevoluteJointDef definition;
+	definition.bodyA = bodyA;
+	definition.bodyB = bodyB;
+	b2Vec2 localanchor(PIXEL_TO_METERS(pivot_x), PIXEL_TO_METERS(pivot_y));
+	definition.localAnchorA = localanchor;
+	definition.localAnchorB = bodyB->GetLocalCenter();
+	definition.enableLimit = true;
+	definition.upperAngle = DEGTORAD * upperangle;
+	definition.lowerAngle = DEGTORAD * lowerangle;
+	world->CreateJoint(&definition);
 }

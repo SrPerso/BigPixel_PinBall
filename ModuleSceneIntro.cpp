@@ -733,6 +733,7 @@ bool ModuleSceneIntro::Start()
 	background = App->textures->Load("pinball/Images/Ground/background.png");
 	background2 = App->textures->Load("pinball/Images/Ground/frontground.png");
 	ball_texture= App->textures->Load("pinball/Images/Ground/ball.png");
+	_red_shadow = App->textures->Load("pinball/Images/Bonus/_red_shadow.png");
 
 	//LOAD AUDIOS
 	hitWall_fx = App->audio->LoadFx("pinball/Audio/HitBallWall.wav");
@@ -835,6 +836,7 @@ update_status ModuleSceneIntro::Update()
 		CurrentTime = SDL_GetTicks();
 		if (CurrentTime > LastTime + 2000) {
 			ball2 = App->physics->CreateCircle(130, 160, 10, 0.5f);
+			App->renderer->Blit(background2, 0, 0);
 			ball_2 = true;			
 			ball2->listener = this;
 			isball1 = false;
@@ -847,10 +849,12 @@ update_status ModuleSceneIntro::Update()
 		CurrentTime = SDL_GetTicks();
 		if (CurrentTime > LastTime+1000) {
 			ball3 = App->physics->CreateCircle(130, 160, 10, 0.5f);
+			App->renderer->Blit(background2, 0, 0);
 			ball_3 = true;			
-			ball3->listener = this;		
+			ball3->listener = this;			
+			isball2 = false;
 			collisioned = false;
-			isball2 = false;	
+			one = true;
 			
 		}
 	}
@@ -876,26 +880,11 @@ update_status ModuleSceneIntro::Update()
 		App->physics->DestroyBody(ball->body);
 		ball = nullptr;
 		ball = App->physics->CreateCircle(520, 900, 10, 0.5f);
-		ball->listener = this;//
-		App->audio->PlayFx(dead_fx);
-	/*	forced = false;*/
+		ball->listener = this;
+		App->audio->PlayFx(dead_fx);	
 	
 	}
-	/*if (bally == 120 && ballx == 100) {
-		uint balls_combo = 1;
-		App->audio->PlayFx(combo_balls, 0);
-		App->physics->DestroyBody(ball->body);
-		ball = nullptr;
-		ball = App->physics->CreateCircle(97, 117, 10, 0.5f);
-		ball->listener = this;//
-		uint LastTime = 0, CurrentTime;
-		CurrentTime = SDL_GetTicks();
-		if (CurrentTime > LastTime + 1000 && balls_combo<3) {
-			ball = App->physics->CreateCircle(97, 117, 10, 0.5f);
-			ball->listener = this;//
-			balls_combo++;
-		}
-	}*/
+	
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
@@ -973,10 +962,8 @@ update_status ModuleSceneIntro::Update()
 			if (bodyA == sensor_ball) {
 				//primero hacer blit de el trozo de textura
 				App->audio->PlayFx(combo_balls, 0);
-				LastTime = SDL_GetTicks();
-				if (one == false) {
-					sensored = true;
-				}
+				LastTime = SDL_GetTicks();				
+				sensored = true;				
 				isball1 = true;
 				LastTime = SDL_GetTicks();
 				

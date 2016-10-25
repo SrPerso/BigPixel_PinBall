@@ -100,6 +100,7 @@ public:
 	SDL_Texture* background;
 	SDL_Texture* background2;
 	SDL_Texture* ball_texture;
+	SDL_Texture* _red_shadow;
 	//
 	//audio
 	uint hitWall_fx;

@@ -56,7 +56,7 @@ bool ModulePhysics::Start()
 	b2Body *circle;
 	b2BodyDef circledef;
 	circledef.type = b2_staticBody;
-	circledef.position.Set(3.8f, 19.4f);
+	circledef.position.Set(3.8, 19.4);
 	circle = world->CreateBody(&circledef);
 	
 	b2CircleShape circleshape;
@@ -64,31 +64,43 @@ bool ModulePhysics::Start()
 	b2FixtureDef myFixtureDef;
 	myFixtureDef.shape = &circleshape;
 	myFixtureDef.density = 1;
-
 	circle->CreateFixture(&myFixtureDef);
 	
 	//CLICKER FOR JOINT:
 	
-	b2Vec2 obstacles[8];
+	
+	/*int frontground[16] = {
+		88, 133,
+		105, 127,
+		118, 154,
+		120, 159,
+		148, 144,
+		154, 156,
+		104, 179,
+		90, 139
+	};*/
+	/*int fliper_down_left[12] = {
+		3, 9,
+		17, 0,
+		74, 14,
+		75, 20,
+		70, 25,
+		13, 30
+	};*/
 
 	
-	obstacles[0].Set(0.0, 0.0);
-	obstacles[1].Set(0.344, 0.927);
-	obstacles[2].Set(0.360, 0.927);
-	obstacles[3].Set(0.438, 0.967);
-	obstacles[4].Set(0.436, 0.978);
-	obstacles[5].Set(0.420, 0.982);
-	obstacles[6].Set(0.326, 0.953);
-	obstacles[7].Set(0.322, 0.941);
+	b2Vec2 obstacles[8];
+	obstacles[0].Set(METERS_TO_PIXELS(181.0), METERS_TO_PIXELS(965.0));
+	obstacles[1].Set(METERS_TO_PIXELS(187.0), METERS_TO_PIXELS(960.0));//y--
+	obstacles[2].Set(METERS_TO_PIXELS(199.0), METERS_TO_PIXELS(960.0));//y-
+	obstacles[3].Set(METERS_TO_PIXELS(240.0), METERS_TO_PIXELS(1000.0));
+	obstacles[4].Set(METERS_TO_PIXELS(238.0), METERS_TO_PIXELS(1010.0));
+	obstacles[5].Set(METERS_TO_PIXELS(225.0), METERS_TO_PIXELS(1009.0));//y--
+	obstacles[6].Set(METERS_TO_PIXELS(181.0), METERS_TO_PIXELS(984.0));
+	obstacles[7].Set(METERS_TO_PIXELS(178.0), METERS_TO_PIXELS(974.0));
+	/*obstacles[6].Set(PIXEL_TO_METERS(50.0), PIXEL_TO_METERS(23.0));//x--
+	obstacles[7].Set(PIXEL_TO_METERS(14.0), PIXEL_TO_METERS(40.0));//x--y--*/
 
-	/*0.900362f, 0.573913f,
-		0.884058f, 0.575845f,
-		0.860507f, 0.616425f,
-		0.867754f, 0.623188f,
-		0.882246f, 0.622222f,
-		0.920290f, 0.582609f,
-		0.911232f, 0.575845f
-};*/
 	
 	/*0.329710f, 0.933333f,
 		0.344203f, 0.927536f,
@@ -100,12 +112,12 @@ bool ModulePhysics::Start()
 		0.322464f, 0.941063f*/
 
 
-	App->physics->CreatePolygons(obstacles,8, b2_dynamicBody, 150, 500, 0.05);
+	//App->physics->CreatePolygons(obstacles,8, b2_dynamicBody, 0, 0, 0.05);
 	
-	/*
+	
 	b2BodyDef clickerdef;
 	clickerdef.type = b2_dynamicBody;
-	clickerdef.position.Set(3.8f, 19.4f);
+	clickerdef.position.Set(0, 0);
 	b2Body *clicker = world->CreateBody(&clickerdef);
 	
 	b2PolygonShape clickershape;
@@ -117,15 +129,15 @@ bool ModulePhysics::Start()
 
 
 	//revolution joint
-
+	
 	b2RevoluteJointDef revoluteJointDef;
 	revoluteJointDef.bodyA = circle;
 	revoluteJointDef.bodyB = clicker;
 	revoluteJointDef.localAnchorA = clicker->GetLocalCenter();
-	revoluteJointDef.localAnchorB = circle->GetLocalCenter();
+	revoluteJointDef.localAnchorB.Set(0, 0);
 	revoluteJointDef.collideConnected = true;
 
-	world->CreateJoint(&revoluteJointDef);*/
+	world->CreateJoint(&revoluteJointDef);
 	
 	
 	//TRIANGLES-----------------------------------------------------------------

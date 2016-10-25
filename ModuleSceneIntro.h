@@ -58,10 +58,15 @@ public:
 	PhysBody* ball_sensor_stop;
 	//sensor balls
 	//PhysBody* sensor_ball;
-	int sensor_balls_stop[6] = {
-		87, 127,
-		87,126,
-		130, 108
+	int sensor_balls_stop[16] = {
+		88, 133,
+		105, 127,
+		118, 154,
+		120, 159,
+		148, 144,
+		154, 156,
+		104, 179,
+		90, 139
 	};
 	//
 	
@@ -78,6 +83,7 @@ public:
 	bool isball2=false;
 	bool collisioned = false;
 	bool sensored = false;
+	bool one = false;
 	//bool sensorss = false;
 
 	uint LastTime = 0, CurrentTime;

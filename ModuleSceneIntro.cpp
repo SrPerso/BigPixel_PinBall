@@ -788,7 +788,7 @@ bool ModuleSceneIntro::Start()
 	
 	//sensor combo balls
 	
-	ball_sensor_stop = App->physics->CreateSensorBall(20, 40, sensor_balls_stop, 6, true);
+	ball_sensor_stop = App->physics->CreateSensorBall(0, 0, sensor_balls_stop, 16, true);
 	
 
 	App->audio->PlayFx(game_bso,20);
@@ -812,12 +812,19 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(background2, 0, 0);
 	App->renderer->Blit(ball_texture,ballx,bally,NULL,1.0f);
 
-	if (isball1 == true) {
-		ball_sensor_stop->body->GetFixtureList()->SetSensor(false);
+	if (sensored == true) {		
+		ball_sensor_stop->body->GetFixtureList()->SetSensor(false);		
+		CurrentTime = SDL_GetTicks();
+		if (CurrentTime > LastTime + 1000) {
+			ball_sensor_stop->body->GetFixtureList()->SetSensor(true);
+			sensored = false;
+		}
+	}
+	if (isball1 == true) {		
 		collisioned = true; 
 		CurrentTime = SDL_GetTicks();
 		if (CurrentTime > LastTime + 2000) {
-			ball3 = App->physics->CreateCircle(110, 140, 10, 0.5f);
+			ball3 = App->physics->CreateCircle(130, 160, 10, 0.5f);
 			ball3->listener = this;
 
 			isball1 = false;
@@ -827,12 +834,12 @@ update_status ModuleSceneIntro::Update()
 	}
 	if(isball2 == true){
 		CurrentTime = SDL_GetTicks();
-		if (CurrentTime > LastTime+2000) {
-			ball3 = App->physics->CreateCircle(110, 140, 10, 0.5f);
-			ball_sensor_stop->body->GetFixtureList()->SetSensor(true);
+		if (CurrentTime > LastTime+1000) {
+			ball3 = App->physics->CreateCircle(130, 160, 10, 0.5f);			
 			ball3->listener = this;		
 			collisioned = false;
-			isball2 = false;		
+			isball2 = false;	
+			
 		}
 	}
 	
@@ -939,8 +946,10 @@ update_status ModuleSceneIntro::Update()
 			if (bodyA == sensor_ball) {
 				//primero hacer blit de el trozo de textura
 				App->audio->PlayFx(combo_balls, 0);
-				LastTime = SDL_GetTicks();				
-				sensored = true;				
+				LastTime = SDL_GetTicks();
+				if (one == false) {
+					sensored = true;
+				}
 				isball1 = true;
 				LastTime = SDL_GetTicks();
 				

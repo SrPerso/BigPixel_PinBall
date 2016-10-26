@@ -29,6 +29,8 @@ public:
 	p2List<PhysBody*> circles;
 	p2List<PhysBody*> boxes;
 	p2List<PhysBody*> ricks;
+
+	ModulePlayer* Player;
 	
 
 	PhysBody* sensor;
@@ -159,7 +161,9 @@ public:
 	PhysBody* rightwheel2;
 
 
-	
+	/*SDL_Rect GetSpriteCood(PhysBody* object);
+	SDL_Rect GetSpritefxCood(PhysBody* object);*/
+
 };
 
 

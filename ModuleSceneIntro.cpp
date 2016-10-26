@@ -6,7 +6,7 @@
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
-
+#include <time.h>
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 
@@ -905,9 +905,75 @@ update_status ModuleSceneIntro::Update()
 	//ball2->SetSprite(677, 228, 10, 10);
 	//ball3->SetSprite(677, 228, 10, 10);
 
+
+
+
+
+
+
 	ball->GetPosition(ballx, bally);
 	leftkicker1.body->GetPosition(clicker1x, clicker1y);
 	App->renderer->Blit(background, 0, 0);
+
+
+
+	if (__1_grey->IsTrodden == false)
+		App->renderer->Blit(spritesheet, 253, 135, &__1_grey->GetSprite());
+	else
+		App->renderer->Blit(spritesheet, 253, 135, &__1_grey->GetSpritefx());
+
+	//
+	if (__3_grey->IsTrodden == false)
+		App->renderer->Blit(spritesheet, 413, 65, &__3_grey->GetSprite());
+	else
+		App->renderer->Blit(spritesheet, 413, 65, &__3_grey->GetSpritefx());
+
+	//
+	if (__5_grey->IsTrodden == false)
+		App->renderer->Blit(spritesheet, 335, 133, &__5_grey->GetSprite());
+	else
+		App->renderer->Blit(spritesheet, 335, 133, &__5_grey->GetSpritefx());
+
+
+
+	if (__6_black->IsTrodden == false)
+		App->renderer->Blit(spritesheet, 398, 116, &__6_black->GetSprite());
+	else
+		App->renderer->Blit(spritesheet, 398, 116, &__6_black->GetSpritefx());
+
+
+
+
+	App->renderer->Blit(spritesheet, 470, 133, &__7_grey->GetSprite());
+	App->renderer->Blit(spritesheet, 503, 236, &__8_grey->GetSprite());
+	App->renderer->Blit(spritesheet, 118, 288, &__10_grey->GetSprite());
+	App->renderer->Blit(spritesheet, 272, 304, &__12_black->GetSprite());
+	App->renderer->Blit(spritesheet, 435, 342, &__15_green->GetSprite());
+	App->renderer->Blit(spritesheet, 290, 468, &__16_green->GetSprite());
+	App->renderer->Blit(spritesheet, 245, 588, &__19_pink->GetSprite());
+	App->renderer->Blit(spritesheet, 126, 613, &__20_yellow->GetSprite());
+
+
+	if (__21_red->IsTrodden == false)
+		App->renderer->Blit(spritesheet, 373, 619, &__21_red->GetSprite());
+	else
+		App->renderer->Blit(spritesheet, 373, 619, &__21_red->GetSpritefx());
+
+
+	App->renderer->Blit(spritesheet, 46, 780, &__22_boy->GetSprite());
+	App->renderer->Blit(spritesheet, 178, 779, &__23_blue->GetSprite());
+	App->renderer->Blit(spritesheet, 295, 776, &__24_green_xp->GetSprite());
+	App->renderer->Blit(spritesheet, 466, 752, &__25_grey->GetSprite());
+	//App->renderer->Blit(spritesheet, 434, 778, &__26_girl->GetSprite());
+	App->renderer->Blit(spritesheet, 236, 886, &__27_yellow->GetSprite());
+
+
+	App->renderer->Blit(spritesheet, 83, 372, &__14_orange->GetSprite(), NULL, 0);
+	App->renderer->Blit(spritesheet, 100, 553, &__18_orange->GetSprite(), NULL, 40);
+
+
+
+
 	App->renderer->Blit(fliper_down_left, clicker1x, clicker1y,NULL,1.0f);
 	App->renderer->Blit(/*spritesheet*/ball_texture, ballx, bally,/* &ball->GetSprite(),*/ NULL,0,1.f);
 	App->renderer->Blit(background2, 0, 0);
@@ -1046,53 +1112,69 @@ update_status ModuleSceneIntro::Update()
 			App->renderer->DrawLine(ray.x + destination.x, ray.y + destination.y, ray.x + destination.x + normal.x * 25.0f, ray.y + destination.y + normal.y * 25.0f, 100, 255, 100);
 	}
 
-
-
-	App->renderer->Blit(spritesheet, 253, 135, &__1_grey->GetSprite());
-	App->renderer->Blit(spritesheet, 413, 65, &__3_grey->GetSprite());
-	App->renderer->Blit(spritesheet, 335, 133, &__5_grey->GetSprite());
-	App->renderer->Blit(spritesheet, 398, 116, &__6_black->GetSprite());
-	App->renderer->Blit(spritesheet, 470, 133, &__7_grey->GetSprite());
-	App->renderer->Blit(spritesheet, 503, 236, &__8_grey->GetSprite());
-	App->renderer->Blit(spritesheet, 118, 288, &__10_grey->GetSprite());
-	App->renderer->Blit(spritesheet, 272, 304, &__12_black->GetSprite());
-	App->renderer->Blit(spritesheet, 435, 342, &__15_green->GetSprite());
-	App->renderer->Blit(spritesheet, 290, 468, &__16_green->GetSprite());
-	App->renderer->Blit(spritesheet, 245, 588, &__19_pink->GetSprite());
-	App->renderer->Blit(spritesheet, 126, 613, &__20_yellow->GetSprite());
-	App->renderer->Blit(spritesheet, 373, 619, &__21_red->GetSprite());
-	App->renderer->Blit(spritesheet, 46, 780, &__22_boy->GetSprite());
-	App->renderer->Blit(spritesheet, 178, 779, &__23_blue->GetSprite());
-	App->renderer->Blit(spritesheet, 295, 776, &__24_green_xp->GetSprite());
-	App->renderer->Blit(spritesheet, 466, 752, &__25_grey->GetSprite());
-	//App->renderer->Blit(spritesheet, 434, 778, &__26_girl->GetSprite());
-	App->renderer->Blit(spritesheet, 236, 886, &__27_yellow->GetSprite());
-
-
-	App->renderer->Blit(spritesheet, 83, 372, &__14_orange->GetSprite(), NULL, 0);
-	App->renderer->Blit(spritesheet, 100, 553, &__18_orange->GetSprite(),NULL,40);
-
+	//
+	
 
 	return UPDATE_CONTINUE;
 }
 
 	void ModuleSceneIntro::OnCollision(PhysBody* bodyB, PhysBody* bodyA)
 	{
-		//App->audio->PlayFx(bonus_fx);
 
+		srand(time(NULL));
+		int i = rand() % 20;
+
+		//App->audio->PlayFx(bonus_fx);
+	
 		if (bodyA == __19_pink || bodyA == __20_yellow || bodyA == __21_red || bodyA == __22_boy ||
 			bodyA == __23_blue || bodyA == __24_green_xp || bodyA == __27_yellow ||/*bodyA == __26_girl ||*/bodyA == __27_yellow) {
+			
 
-			App->audio->PlayFx(bird_fx, 0);//play the bonus 
+			if (bodyA == __19_pink) {
+				
+				//App->player->ImproveScore(100);
+			
+
+				__19_pink->IsTrodden = true;
+			}
+						
+
+			if (bodyA == __20_yellow) {
+				__20_yellow->IsTrodden = true;
+			}
+			
+
+			if (bodyA == __21_red) {
+
+				__21_red->IsTrodden = true;
+
+			}
+			
+
+			if (bodyA == __22_boy)
+				__22_boy->IsTrodden = true;
+
+
+
+			
+			if (i == 1) {
+				App->audio->PlayFx(bird_fx, 0);//play the bonus 
+			}
+			if (i == 2 || i == 3 || i == 4) {
+
+			}			
 			//añadir 100 puntos
-			if (__6_black->IsTrodden == true) {}
+			//if (__6_black->IsTrodden == true) {}
 
 		}
 		if (bodyA == __1_grey || bodyA == __3_grey || bodyA == __5_grey ||
 			bodyA == __7_grey || bodyA == __8_grey || bodyA == __10_grey ||
 			bodyA == __25_grey || bodyA == __15_green || bodyA == __16_green) {
+			
 
-			App->audio->PlayFx(gg_fx);//play the bonus 							
+			
+				App->audio->PlayFx(gg_fx);//play the bonus 			
+					
 
 		}
 		if (collisioned == false) {
@@ -1112,9 +1194,19 @@ update_status ModuleSceneIntro::Update()
 		
 	}
 
+	/*SDL_Rect ModuleSceneIntro::GetSpriteCood(PhysBody * object)
+	{
+		return object->GetSprite();
+	}
 
-
+	SDL_Rect ModuleSceneIntro::GetSpritefxCood(PhysBody * object)
+	{
+		return object->GetSpritefx();
+	}*/
 	
+
+
+
 
 	//if (bodyA == __2_orange || bodyA == __4_orange || bodyA == __9_orange ||
 	//	bodyA == __11_orange || bodyA == __13_orange || bodyA == __14_orange ||

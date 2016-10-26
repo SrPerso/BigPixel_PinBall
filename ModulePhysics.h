@@ -54,6 +54,7 @@ public:
 	SDL_Rect sprite;
 	SDL_Rect spritefx;
 
+
 };
 
 // Module --------------------------------------

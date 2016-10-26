@@ -751,6 +751,7 @@ bool ModuleSceneIntro::Start()
 	//LOAD AUDIOS
 	hitWall_fx = App->audio->LoadFx("pinball/Audio/HitBallWall.wav");
 	bird_fx = App->audio->LoadFx("pinball/Audio/bird_fx.wav");
+	bird_fx2 = App->audio->LoadFx("pinball/Audio/bird_fx2.wav");
 	dead_fx = App->audio->LoadFx("pinball/Audio/dead_fx.wav");
 	game_bso = App->audio->LoadFx("pinball/Audio/game_bso.wav");
 	gg_fx = App->audio->LoadFx("pinball/Audio/gg_circles_fx.wav");
@@ -934,36 +935,92 @@ update_status ModuleSceneIntro::Update()
 	else
 		App->renderer->Blit(spritesheet, 335, 133, &__5_grey->GetSpritefx());
 
-
-
+	//
 	if (__6_black->IsTrodden == false)
 		App->renderer->Blit(spritesheet, 398, 116, &__6_black->GetSprite());
 	else
 		App->renderer->Blit(spritesheet, 398, 116, &__6_black->GetSpritefx());
 
+	//
+	if(__7_grey->IsTrodden==false)
+		App->renderer->Blit(spritesheet, 470, 133, &__7_grey->GetSprite());
+	else
+		App->renderer->Blit(spritesheet, 470, 133, &__7_grey->GetSpritefx());
 
+	//
+	if(__8_grey->IsTrodden==false)
+		App->renderer->Blit(spritesheet, 503, 236, &__8_grey->GetSprite());
+	else
+		App->renderer->Blit(spritesheet, 503, 236, &__8_grey->GetSpritefx());
+	
+	//
+	if (__10_grey->IsTrodden == false)
+		App->renderer->Blit(spritesheet, 118, 288, &__10_grey->GetSprite());
+	else {
+		App->renderer->Blit(spritesheet, 118, 288, &__10_grey->GetSpritefx());
+		
+		//__10_grey->IsTrodden == false;
+	}	
 
+	if(__12_black->IsTrodden == false)
+		App->renderer->Blit(spritesheet, 272, 304, &__12_black->GetSprite());
+	else 
+		App->renderer->Blit(spritesheet, 272, 304, &__12_black->GetSpritefx());
+	//
+	if(__15_green->IsTrodden==false)
+		App->renderer->Blit(spritesheet, 435, 342, &__15_green->GetSprite());
+	
+	else 
+		App->renderer->Blit(spritesheet, 395, 304, &__15_green->GetSpritefx());
 
-	App->renderer->Blit(spritesheet, 470, 133, &__7_grey->GetSprite());
-	App->renderer->Blit(spritesheet, 503, 236, &__8_grey->GetSprite());
-	App->renderer->Blit(spritesheet, 118, 288, &__10_grey->GetSprite());
-	App->renderer->Blit(spritesheet, 272, 304, &__12_black->GetSprite());
-	App->renderer->Blit(spritesheet, 435, 342, &__15_green->GetSprite());
-	App->renderer->Blit(spritesheet, 290, 468, &__16_green->GetSprite());
-	App->renderer->Blit(spritesheet, 245, 588, &__19_pink->GetSprite());
-	App->renderer->Blit(spritesheet, 126, 613, &__20_yellow->GetSprite());
+	//
+	if(__16_green->IsTrodden==false)
+		App->renderer->Blit(spritesheet, 290, 468, &__16_green->GetSprite());
+	else 
+		App->renderer->Blit(spritesheet, 250, 430, &__16_green->GetSpritefx());
 
+	//
+	if(__19_pink->IsTrodden==false)
+		App->renderer->Blit(spritesheet, 245, 588, &__19_pink->GetSprite());
+	else
+		App->renderer->Blit(spritesheet, 245, 588, &__19_pink->GetSpritefx());
 
+	//
+	if(__20_yellow->IsTrodden==false)
+		App->renderer->Blit(spritesheet, 126, 613, &__20_yellow->GetSprite());
+	else
+		App->renderer->Blit(spritesheet, 126, 613, &__20_yellow->GetSprite());
+
+	//
 	if (__21_red->IsTrodden == false)
 		App->renderer->Blit(spritesheet, 373, 619, &__21_red->GetSprite());
 	else
 		App->renderer->Blit(spritesheet, 373, 619, &__21_red->GetSpritefx());
 
+	//
+	if(__22_boy->IsTrodden==false)
+		App->renderer->Blit(spritesheet, 46, 780, &__22_boy->GetSprite());
+	else
+		App->renderer->Blit(spritesheet, 46, 780, &__22_boy->GetSprite());
 
-	App->renderer->Blit(spritesheet, 46, 780, &__22_boy->GetSprite());
-	App->renderer->Blit(spritesheet, 178, 779, &__23_blue->GetSprite());
-	App->renderer->Blit(spritesheet, 295, 776, &__24_green_xp->GetSprite());
-	App->renderer->Blit(spritesheet, 466, 752, &__25_grey->GetSprite());
+	//
+	if(__23_blue->IsTrodden==false)
+		App->renderer->Blit(spritesheet, 178, 779, &__23_blue->GetSprite());
+	else
+		App->renderer->Blit(spritesheet, 178, 779, &__23_blue->GetSpritefx());
+	
+	//
+	if(__24_green_xp->IsTrodden==false)
+		App->renderer->Blit(spritesheet, 295, 776, &__24_green_xp->GetSprite());
+	else
+		App->renderer->Blit(spritesheet, 295, 776, &__24_green_xp->GetSprite());
+	//
+	if(__25_grey->IsTrodden==false)
+		App->renderer->Blit(spritesheet, 466, 752, &__25_grey->GetSprite());
+	else
+		App->renderer->Blit(spritesheet, 466, 752, &__25_grey->GetSprite());
+
+
 	//App->renderer->Blit(spritesheet, 434, 778, &__26_girl->GetSprite());
 	App->renderer->Blit(spritesheet, 236, 886, &__27_yellow->GetSprite());
 
@@ -1122,51 +1179,135 @@ update_status ModuleSceneIntro::Update()
 	{
 
 		srand(time(NULL));
-		int i = rand() % 20;
-
+		
 		//App->audio->PlayFx(bonus_fx);
 	
 		if (bodyA == __19_pink || bodyA == __20_yellow || bodyA == __21_red || bodyA == __22_boy ||
-			bodyA == __23_blue || bodyA == __24_green_xp || bodyA == __27_yellow ||/*bodyA == __26_girl ||*/bodyA == __27_yellow) {
+			bodyA == __23_blue || bodyA == __24_green_xp || bodyA == __27_yellow ||/*bodyA == __26_girl ||*/
+			bodyA == __27_yellow) {
 			
+			int i = rand() % 20;
+			
+			//--------------------------
 
-			if (bodyA == __19_pink) {
+			if (bodyA == __19_pink) {				
+				//App->player->ImproveScore(100);	
+
+				if ((i == 1 || i == 2)&& __19_pink->IsTrodden == false)
+					App->audio->PlayFx(bird_fx, 0);//play the bonus 
+
+				if (i >2 && i <= 6) 
+					App->audio->PlayFx(bird_fx2, 0);//play the bonus 
 				
-				//App->player->ImproveScore(100);
-			
-
 				__19_pink->IsTrodden = true;
 			}
-						
+			//--------------------------						
 
-			if (bodyA == __20_yellow) {
+			else if (bodyA == __20_yellow) {
+				//App->player->ImproveScore(100);	
+
+				if ((i == 1 || i == 2) && __20_yellow->IsTrodden == false)
+					App->audio->PlayFx(bird_fx, 0);//play the bonus 
+
+				if (i >2 && i <= 6)
+					App->audio->PlayFx(bird_fx2, 0);//play the bonus 
+
 				__20_yellow->IsTrodden = true;
 			}
 			
+			//--------------------------
+			else if (bodyA == __21_red) {
+				//App->player->ImproveScore(100);	
 
-			if (bodyA == __21_red) {
+				if (__21_red->IsTrodden == false)
+					App->audio->PlayFx(bird_fx, 0);//play the bonus 
+
+				if (i >2 && i <= 6)
+					App->audio->PlayFx(bird_fx2, 0);//play the bonus 
 
 				__21_red->IsTrodden = true;
 
-			}
-			
-
-			if (bodyA == __22_boy)
-				__22_boy->IsTrodden = true;
-
-
-
-			
-			if (i == 1) {
-				App->audio->PlayFx(bird_fx, 0);//play the bonus 
-			}
-			if (i == 2 || i == 3 || i == 4) {
-
 			}			
-			//añadir 100 puntos
+			//--------------------------
+
+
+			else if (bodyA == __22_boy) {
+				//App->player->ImproveScore(200);
+				__22_boy->IsTrodden = true;
+			}
+			//--------------------------
+
+			else if (bodyA == __23_blue) {
+				//App->player->ImproveScore(100);
+				if ((i == 1 || i == 2) && __23_blue->IsTrodden == false)
+					App->audio->PlayFx(bird_fx, 0);//play the bonus 
+
+				if (i >2 && i <= 6)
+					App->audio->PlayFx(bird_fx2, 0);//play the bonus 
+
+				__23_blue->IsTrodden = true;
+			}
+			//--------------------------
+
+			else if (bodyA == __24_green_xp) {
+				//App->player->ImproveScore(100);
+				if ((i == 1 || i == 2) && __24_green_xp->IsTrodden == false)
+					App->audio->PlayFx(bird_fx, 0);//play the bonus 
+
+				if (i >2 && i <= 6)
+					App->audio->PlayFx(bird_fx2, 0);//play the bonus 
+
+				__24_green_xp->IsTrodden = true;
+			}
+
+			else if (bodyA == __27_yellow) {
+				//App->player->ImproveScore(100);
+				if ((i == 1 || i == 2) && __27_yellow->IsTrodden == false)
+					App->audio->PlayFx(bird_fx, 0);//play the bonus 
+
+				if (i >2 && i <= 6)
+					App->audio->PlayFx(bird_fx2, 0);//play the bonus 
+
+				__27_yellow->IsTrodden = true;
+			}
+
+			//if (bodyA == __26_girl) {
+			//App->player->ImproveScore(100);
+			//if ((i == 1 || i == 2) && __27_yellow->IsTrodden == false)
+			//	App->audio->PlayFx(bird_fx, 0);//play the bonus 
+
+			//if (i >2 && i <= 6)
+			//	App->audio->PlayFx(bird_fx2, 0);//play the bonus 
+
+			//__27_yellow->IsTrodden = true;
+			//}
+
 			//if (__6_black->IsTrodden == true) {}
 
 		}
+
+
+
+		if (bodyA == __15_green || bodyA == __16_green) {
+			
+			
+
+			 if (bodyA == __15_green) {
+				//App->player->ImproveScore(100);		
+				__15_green->IsTrodden = true;
+			}
+			 if (bodyA == __16_green) {
+				 //App->player->ImproveScore(100);
+;				 __16_green->IsTrodden = true;
+			 }
+			 
+			 App->audio->PlayFx(gg_fx, 0);//play the bonus 
+
+		}
+
+
+
+
 		if (bodyA == __1_grey || bodyA == __3_grey || bodyA == __5_grey ||
 			bodyA == __7_grey || bodyA == __8_grey || bodyA == __10_grey ||
 			bodyA == __25_grey || bodyA == __15_green || bodyA == __16_green) {

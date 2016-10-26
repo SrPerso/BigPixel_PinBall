@@ -127,6 +127,7 @@ public:
 	uint game_bso;
 	uint dead_fx;
 	uint gg_fx;
+	uint bird_fx2;
 	uint combo_balls;
 	
 

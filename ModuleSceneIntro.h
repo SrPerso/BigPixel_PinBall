@@ -109,7 +109,10 @@ public:
 	SDL_Texture* fliper_down_right;
 	SDL_Texture* fliper_down_left2;
 	SDL_Texture* fliper_down_right2;
+	SDL_Texture* puller_txt;
 	SDL_Texture* Game_Over;
+	
+	int angle;
 	//
 	//AUDIO----
 	uint hitWall_fx;
@@ -121,13 +124,16 @@ public:
 	uint combo_balls;
 	uint combo_balls_release;
 	uint pull_fx;
-	uint trhow_pull_fx;
+	uint throw_pull_fx;
+	uint kicker_left;
+	uint kicker_right;
 	//--------
 
 
 	p2Point<int> ray;
 	bool ray_on;
 	bool destroyed = false;
+	bool combodone = false;
 
 	ModulePhysics* pointer = nullptr;
 

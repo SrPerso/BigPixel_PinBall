@@ -17,10 +17,17 @@ public:
 	int GetScore() { return Score; }
 	void RestBalls() { this->Balls-=1; }
 	int GetBalls() { return Balls; }
-	int ResetBalls() { this->Balls = 3; };
-	int Balls=3;
+	void ResetBalls() { this->Balls = 3; };
+
+	int GetPreviousScore() { return this->PreviousScore; }
+	void SetPreviousScore() { this->PreviousScore = this->Score; }
+	void ResetScore() { this->Score = 0; }
+
+
+
 private:
 	int Score;
-	
+	int PreviousScore=0;
+	int Balls = 3;
 
 };

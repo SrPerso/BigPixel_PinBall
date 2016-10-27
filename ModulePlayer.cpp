@@ -21,7 +21,9 @@ bool ModulePlayer::Start()
 bool ModulePlayer::CleanUp()
 {
 	LOG("Unloading player");
-
+	SetPreviousScore();
+	ResetScore();
+	ResetBalls();
 	return true;
 }
 

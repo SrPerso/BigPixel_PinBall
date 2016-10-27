@@ -63,6 +63,46 @@ bool ModuleSceneIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
 
+
+
+
+	__1_grey->IsTrodden = false;
+	__3_grey->IsTrodden = false;
+	__5_grey->IsTrodden = false;
+	__6_black->IsTrodden = false;
+	__7_grey->IsTrodden = false;
+	__8_grey->IsTrodden = false;
+	__10_grey->IsTrodden = false;
+	__12_black->IsTrodden = false;
+	__19_pink->IsTrodden = false;
+	__20_yellow->IsTrodden = false;
+	__21_red->IsTrodden = false;
+	__22_boy->IsTrodden = false;
+	__23_blue->IsTrodden = false;
+	__24_green_xp->IsTrodden = false;
+	__25_grey->IsTrodden = false;
+	__26_girl->IsTrodden = false;
+	__27_yellow->IsTrodden = false;
+	__2_orange->IsTrodden = false;
+	__4_orange->IsTrodden = false;
+	__9_orange->IsTrodden = false;
+	__11_orange->IsTrodden = false;
+	__13_orange->IsTrodden = false;
+	__14_orange->IsTrodden = false;
+	__17_orange->IsTrodden = false;
+	__18_orange->IsTrodden = false;
+
+	destroyed = false;
+	isball1 = false;
+	isball2 = false;
+	collisioned = false;
+	sensored = false;
+	one = false;
+	ball_2 = false;
+	ball_3 = false;
+
+	App->player->CleanUp();
+
 	return true;
 }
 
@@ -70,7 +110,9 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update()
 {
 
-	
+	if (App->player->GetBalls() == 0) {
+		CleanUp();
+	}
 	leftkicker1.body->GetPosition(clicker1x, clicker1y);
 	App->renderer->Blit(background, 0, 0);
 
@@ -450,7 +492,7 @@ update_status ModuleSceneIntro::Update()
 	//print scores
 
 	char title[100];
-	sprintf_s(title, "PepsiPinball   Points: %i, Balls: %i, Last Score: **", App->player->GetScore(), App->player->GetBalls()/*score1*/);
+	sprintf_s(title, "PepsiPinball   Points: %i, Balls: %i, Last Score: %i", App->player->GetScore(), App->player->GetBalls(),App->player->GetPreviousScore()/*score1*/);
 	
 	App->window->SetTitle(title);
 

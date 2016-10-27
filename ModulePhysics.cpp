@@ -31,95 +31,16 @@ bool ModulePhysics::Start()
 	world = new b2World(b2Vec2(GRAVITY_X, -GRAVITY_Y));
 	world->SetContactListener(this);
 
-	// needed to create joints like mouse joint
+	
 	b2BodyDef bd;
 	ground = world->CreateBody(&bd);
 
-	// big static circle as "ground" in the middle of the screen
+
 	int x = SCREEN_WIDTH / 2;
 	int y = SCREEN_HEIGHT / 1.5f;
 	int diameter = SCREEN_WIDTH / 2;
 
-	/*b2BodyDef body;
-	body.type = b2_staticBody;
-	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-
-	/*b2Body* big_ball = world->CreateBody(&body);
-
-	b2CircleShape shape;
-	shape.m_radius = PIXEL_TO_METERS(diameter) * 0.5f;
 	
-	b2FixtureDef fixture;
-	fixture.shape = &shape;
-	big_ball->CreateFixture(&fixture);*/
-	//CIRCLE FOR JOINT
-	/*b2Body *circle;
-	b2BodyDef circledef;
-	circledef.type = b2_staticBody;
-	circledef.position.Set(3.9, 19.5);
-	circle = world->CreateBody(&circledef);
-	
-	b2CircleShape circleshape;
-	circleshape.m_radius = PIXEL_TO_METERS(8);
-	b2FixtureDef myFixtureDef;
-	myFixtureDef.shape = &circleshape;
-	myFixtureDef.density = 1;
-	circle->CreateFixture(&myFixtureDef);
-	
-	//CLICKER FOR JOINT:
-	
-	
-	/*int frontground[16] = {
-		88, 133,
-		105, 127,
-		118, 154,
-		120, 159,
-		148, 144,
-		154, 156,
-		104, 179,
-		90, 139
-	};*/
-	/*int fliper_down_left[12] = {
-		3, 9,
-		17, 0,
-		74, 14,
-		75, 20,
-		70, 25,
-		13, 30
-	};*/
-	//----
-
-
-	/*
-	b2BodyDef polygonbody;
-	polygonbody.type = b2_dynamicBody;
-	polygonbody.position.Set(3.6, 19.3);
-
-	b = world->CreateBody(&polygonbody);
-
-	b2PolygonShape polygon1shape;
-	polygon1shape.Set(obstacles, 8);
-	b2FixtureDef polygon1fix;
-	polygon1fix.density = 1.0f;
-	polygon1fix.restitution = 0.05f;
-	polygon1fix.shape = &polygon1shape;
-	b->CreateFixture(&polygon1fix);
-
-
-	//revolution joint
-	
-	b2RevoluteJointDef revoluteJointDef;
-	revoluteJointDef.bodyA = circle;
-	revoluteJointDef.bodyB = b;
-	b2Vec2 anchor(0.40,0.75);
-	revoluteJointDef.localAnchorA = b->GetLocalCenter();
-	revoluteJointDef.localAnchorB = anchor;
-	revoluteJointDef.enableLimit = true;
-	revoluteJointDef.collideConnected = true;
-	revoluteJointDef.upperAngle = DEGTORAD * 0;
-	revoluteJointDef.lowerAngle = DEGTORAD * -23;
-	world->CreateJoint(&revoluteJointDef);*/
-	//_-----------------
 	
 	//TRIANGLES-----------------------------------------------------------------
 	//LEFT
@@ -537,6 +458,10 @@ update_status ModulePhysics::PostUpdate()
 bool ModulePhysics::CleanUp()
 {
 	LOG("Destroying physics world");
+	//AVoid Memory Leaks:
+	for (b2Body* b = world->GetBodyList(); b; b = b->GetNext()) {
+		delete b->GetUserData();
+	}
 
 	// Delete the whole physics world!
 	delete world;

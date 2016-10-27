@@ -1049,7 +1049,6 @@ update_status ModuleSceneIntro::Update()
 	//App->renderer->Blit(spritesheet, 434, 778, &__26_girl->GetSprite());
 	App->renderer->Blit(spritesheet, 236, 886, &__27_yellow->GetSprite());
 
-
 	App->renderer->Blit(spritesheet, 83, 372, &__14_orange->GetSprite(), NULL, 0);
 	App->renderer->Blit(spritesheet, 100, 553, &__18_orange->GetSprite(), NULL, 40);
 
@@ -1066,11 +1065,11 @@ update_status ModuleSceneIntro::Update()
 	rightkicker2.body->GetPosition(x, y);
 	App->renderer->Blit(fliper_down_right2, x-53, y-10, NULL, 1.0f, RADTODEG *rightkicker2.body->getAngle(),58,10);
 	//Blit the texture of the combo balls:
-	if(ball_2 == true) {
+	if(ball2 != nullptr) {
 		ball2->GetPosition(ball2x, ball2y);
 		App->renderer->Blit(ball_texture, ball2x, ball2y, NULL, 1.0f);
 	}
-	if(ball_3== true) {
+	if(ball3!= nullptr) {
 		ball3->GetPosition(ball3x, ball3y);
 		App->renderer->Blit(ball_texture, ball3x, ball3y, NULL, 1.0f,20.0f);
 	}
@@ -1091,7 +1090,7 @@ update_status ModuleSceneIntro::Update()
 		CurrentTime = SDL_GetTicks();
 		if (CurrentTime > LastTime + 2000) {
 			ball2 = App->physics->CreateCircle(130, 160, 10, 0.5f, true, b2_dynamicBody);
-			App->renderer->Blit(background2, 0, 0);
+			//App->renderer->Blit(background2, 0, 0);
 			ball_2 = true;			
 			ball2->listener = this;
 			isball1 = false;
@@ -1105,7 +1104,7 @@ update_status ModuleSceneIntro::Update()
 		CurrentTime = SDL_GetTicks();
 		if (CurrentTime > LastTime+1000) {
 			ball3 = App->physics->CreateCircle(130, 160, 10, 0.5f, true, b2_dynamicBody);
-			App->renderer->Blit(background2, 0, 0);
+			//App->renderer->Blit(background2, 0, 0);
 			ball_3 = true;			
 			ball3->listener = this;			
 			isball2 = false;
@@ -1116,24 +1115,28 @@ update_status ModuleSceneIntro::Update()
 	}
 	
 	//DESTROY BALLS	
-	if (ball_2 == true) {
+	if (ball2 != nullptr) {
 		if (ball2y >= 1010) {
 			App->physics->DestroyBody(ball2->body);
+			delete ball2;
 			ball2 = nullptr;
 			App->audio->PlayFx(dead_fx);
 			//ball_2 = false;
 		}
 	}
-	if (ball_3 == true) {
+	if (ball3 != nullptr) {
 		if (ball3y >= 1010) {
 			App->physics->DestroyBody(ball3->body);
+			delete ball3;
 			ball3 = nullptr;
 			App->audio->PlayFx(dead_fx);
 			//ball_3 = false;
 		}
 	}
 	if ( bally >= 1010) {
+		
 		App->physics->DestroyBody(ball->body);
+		delete ball;
 		ball = nullptr;
 		ball = App->physics->CreateCircle(520, 900, 10, 0.5f, false, b2_dynamicBody);
 		ball->listener = this;

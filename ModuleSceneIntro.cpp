@@ -103,20 +103,11 @@ bool ModuleSceneIntro::Start()
 	
 
 	//--
-	int _2_orange[26] = {
-		361, 68,
-		352, 77,
-		349, 87,
-		350, 99,
-		358, 109,
-		368, 113,
-		380, 113,
-		389, 107,
-		395, 98,
-		396, 86,
-		391, 76,
-		383, 68,
-		373, 66
+	int _2_orange[8] = {
+		329, 69,
+		336, 75,
+		365, 52,
+		357, 44
 	};
 
 	
@@ -139,19 +130,11 @@ bool ModuleSceneIntro::Start()
 	
 
 	//
-	int _4_orange[24] = {
-		454, 94,
-		460, 106,
-		469, 113,
-		482, 114,
-		494, 107,
-		500, 96,
-		500, 85,
-		493, 73,
-		483, 67,
-		470, 67,
-		460, 73,
-		454, 83
+	int _4_orange[8] = {
+		488, 45,
+		484, 51,
+		513, 76,
+		519, 70
 	};
 
 	//
@@ -223,21 +206,11 @@ bool ModuleSceneIntro::Start()
 
 	//
 
-	int _9_orange[28] = {
-		121, 243,
-		119, 250,
-		120, 261,
-		126, 270,
-		135, 277,
-		146, 278,
-		154, 275,
-		162, 269,
-		166, 259,
-		165, 246,
-		159, 237,
-		151, 231,
-		140, 230,
-		130, 234
+	int _9_orange[8] = {
+		94, 255,
+		103, 258,
+		117, 224,
+		106, 219
 	};
 
 	//
@@ -258,23 +231,11 @@ bool ModuleSceneIntro::Start()
 	};
 	
 	//
-	int _11_orange[32] = {
-		470, 292,
-		470, 301,
-		472, 309,
-		478, 315,
-		486, 320,
-		497, 321,
-		506, 317,
-		513, 311,
-		516, 303,
-		517, 293,
-		513, 284,
-		506, 278,
-		499, 274,
-		488, 274,
-		479, 278,
-		474, 283
+	int _11_orange[8] = {
+		535, 279,
+		529, 279,
+		529, 315,
+		536, 315
 	};
 
 	//
@@ -296,37 +257,19 @@ bool ModuleSceneIntro::Start()
 
 
 	//
-	int _13_orange[26] = {
-		121, 370,
-		132, 370,
-		142, 367,
-		149, 359,
-		151, 349,
-		149, 336,
-		141, 327,
-		131, 324,
-		118, 325,
-		109, 332,
-		104, 345,
-		107, 358,
-		113, 364
+	int _13_orange[8] = {
+		92, 328,
+		84, 328,
+		84, 366,
+		94, 366
 	};
 
 	//
-	int _14_orange[26] = {
-		104, 389,
-		105, 403,
-		111, 412,
-		121, 418,
-		133, 419,
-		142, 413,
-		150, 405,
-		151, 393,
-		148, 383,
-		140, 375,
-		130, 372,
-		120, 373,
-		110, 380
+	int _14_orange[8] = {
+		85, 412,
+		92, 412,
+		93, 377,
+		85, 377
 	};
 	
 	//
@@ -370,35 +313,20 @@ bool ModuleSceneIntro::Start()
 	};
 
 	//
-	int _17_orange[22] = {
-		487, 526,
-		499, 526,
-		509, 520,
-		516, 510,
-		516, 496,
-		509, 486,
-		495, 480,
-		480, 484,
-		472, 495,
-		472, 509,
-		477, 519
+	int _17_orange[8] = {
+		535, 519,
+		528, 519,
+		529, 485,
+		536, 484
 	};
 
+
 	//
-	int _18_orange[26] = {
-		137, 604,
-		147, 604,
-		157, 599,
-		164, 590,
-		166, 580,
-		162, 569,
-		153, 560,
-		140, 557,
-		128, 561,
-		121, 569,
-		118, 581,
-		122, 594,
-		128, 600
+	int _18_orange[8] = {
+		96, 563,
+		103, 570,
+		127, 544,
+		121, 538
 	};
 	
 	//
@@ -534,6 +462,7 @@ bool ModuleSceneIntro::Start()
 		300, 825,
 		301, 831
 	};
+
 
 
 
@@ -808,7 +737,7 @@ bool ModuleSceneIntro::Start()
 	__1_grey->SetSprite(184, 176, 27, 27);
 	__1_grey->SetSpritefx(25, 149, 83, 83);
 
-	__2_orange = App->physics->CreateChain(0, 0, _2_orange, 22, b2_staticBody);//orange
+	__2_orange = App->physics->CreateChain(0, 0, _2_orange, 8, b2_staticBody);//orange
 	__2_orange->SetSprite(811, 94, 68, 47);
 	__2_orange->SetSpritefx(902, 94, 68, 47);
 
@@ -816,7 +745,7 @@ bool ModuleSceneIntro::Start()
 	__3_grey->SetSprite(184, 176, 27, 27);
 	__3_grey->SetSpritefx(25, 149, 83, 83);
 
-	__4_orange = App->physics->CreateChain(0, 0, _4_orange, 22, b2_staticBody);//orange
+	__4_orange = App->physics->CreateChain(0, 0, _4_orange, 8, b2_staticBody);//orange
 	__4_orange->SetSprite(811, 94, 68, 47);
 	__4_orange->SetSpritefx(902, 94, 68, 47);
 
@@ -837,7 +766,7 @@ bool ModuleSceneIntro::Start()
 	__8_grey->SetSprite(184, 176, 27, 27);
 	__8_grey->SetSpritefx(25, 149, 83, 83);
 
-	__9_orange = App->physics->CreateChain(0, 0, _9_orange, 22, b2_staticBody);//orange
+	__9_orange = App->physics->CreateChain(0, 0, _9_orange, 8, b2_staticBody);//orange
 	__9_orange->SetSprite(811, 94, 68, 47);
 	__9_orange->SetSpritefx(902, 94, 68, 47);
 
@@ -846,7 +775,7 @@ bool ModuleSceneIntro::Start()
 	__10_grey->SetSprite(184, 176, 27, 27);
 	__10_grey->SetSpritefx(25, 149, 83, 83);
 
-	__11_orange = App->physics->CreateChain(0, 0, _11_orange, 22, b2_staticBody);//orange
+	__11_orange = App->physics->CreateChain(0, 0, _11_orange, 8, b2_staticBody);//orange
 	__11_orange->SetSprite(811, 94, 68, 47);
 	__11_orange->SetSpritefx(902, 94, 68, 47);
 
@@ -854,11 +783,11 @@ bool ModuleSceneIntro::Start()
 	__12_black->SetSprite(7, 80, 55, 50);
 	__12_black->SetSpritefx(82, 80, 57, 50);
 
-	__13_orange = App->physics->CreateChain(0, 0, _13_orange, 22, b2_staticBody);//orange
+	__13_orange = App->physics->CreateChain(0, 0, _13_orange, 8, b2_staticBody);//orange
 	__13_orange->SetSprite(811, 94, 68, 47);
 	__13_orange->SetSpritefx(902, 94, 68, 47);
 
-	__14_orange = App->physics->CreateChain(0, 0, _14_orange, 22, b2_staticBody);//orange
+	__14_orange = App->physics->CreateChain(0, 0, _14_orange, 8, b2_staticBody);//orange
 	__14_orange->SetSprite(811, 94, 68, 47);
 	__14_orange->SetSpritefx(902, 94, 68, 47);
 
@@ -871,11 +800,11 @@ bool ModuleSceneIntro::Start()
 	__16_green->SetSprite(556, 218, 71, 71);
 	__16_green->SetSpritefx(323, 172, 149, 147);
 
-	__17_orange = App->physics->CreateChain(0, 0, _17_orange, 22, b2_staticBody);//orange
+	__17_orange = App->physics->CreateChain(0, 0, _17_orange, 8, b2_staticBody);//orange
 	__17_orange->SetSprite(811, 94, 68, 47);
 	__17_orange->SetSpritefx(902, 94, 68, 47);
 
-	__18_orange = App->physics->CreateChain(0, 0, _18_orange, 22, b2_staticBody);//orange
+	__18_orange = App->physics->CreateChain(0, 0, _18_orange, 8, b2_staticBody);//orange
 	__18_orange->SetSprite(811, 94, 68, 47);
 	__18_orange->SetSpritefx(902, 94, 68, 47);
 
@@ -1066,13 +995,61 @@ update_status ModuleSceneIntro::Update()
 		App->renderer->Blit(spritesheet, 466, 752, &__25_grey->GetSprite());
 	else
 		App->renderer->Blit(spritesheet, 466, 752, &__25_grey->GetSpritefx());
+	//
+	if (__27_yellow->IsTrodden == false)
+		App->renderer->Blit(spritesheet, 241, 886, &__27_yellow->GetSprite());
+	else
+		App->renderer->Blit(spritesheet, 241, 886, &__27_yellow->GetSpritefx());
+	//
 
 
-	//App->renderer->Blit(spritesheet, 434, 778, &__26_girl->GetSprite());
-	App->renderer->Blit(spritesheet, 236, 886, &__27_yellow->GetSprite());
+	if(__2_orange->IsTrodden==false)
+		App->renderer->Blit(spritesheet, 330, 60, &__2_orange->GetSprite(), NULL, 50);
+	else
+		App->renderer->Blit(spritesheet, 330, 60, &__2_orange->GetSpritefx(), NULL, 50);
+	//
+	if (__4_orange->IsTrodden == false)
+		App->renderer->Blit(spritesheet, 450, 60, &__4_orange->GetSprite(), NULL, 130);
+	else
+		App->renderer->Blit(spritesheet, 450, 60, &__4_orange->GetSpritefx(), NULL, 130);
+	//
+	if (__9_orange->IsTrodden == false)
+		App->renderer->Blit(spritesheet, 95, 225, &__9_orange->GetSprite(), NULL, 20);
+	else
+		App->renderer->Blit(spritesheet, 95, 225, &__9_orange->GetSpritefx(), NULL, 20);
+	//
+	if (__11_orange->IsTrodden == false)
+		App->renderer->Blit(spritesheet, 470, 275, &__11_orange->GetSprite(), NULL, 180);
+	else
+		App->renderer->Blit(spritesheet, 470, 275, &__11_orange->GetSpritefx(), NULL, 180);
+	//
+	if (__13_orange->IsTrodden == false)
+		App->renderer->Blit(spritesheet, 83, 322, &__13_orange->GetSprite(), NULL, 0);
+	else
+		App->renderer->Blit(spritesheet, 83, 322, &__13_orange->GetSpritefx(), NULL, 0);
 
-	App->renderer->Blit(spritesheet, 83, 372, &__14_orange->GetSprite(), NULL, 0);
-	App->renderer->Blit(spritesheet, 100, 553, &__18_orange->GetSprite(), NULL, 40);
+	//
+	if (__14_orange->IsTrodden == false)
+		App->renderer->Blit(spritesheet, 83, 372, &__14_orange->GetSprite(), NULL, 0);
+	else
+		App->renderer->Blit(spritesheet, 83, 372, &__14_orange->GetSpritefx(), NULL, 0);
+	//
+	if (__4_orange->IsTrodden == false)
+		App->renderer->Blit(spritesheet, 470, 478, &__17_orange->GetSprite(), NULL, 180);
+	else
+		App->renderer->Blit(spritesheet, 470, 478, &__17_orange->GetSpritefx(), NULL, 180);
+	//
+	if (__4_orange->IsTrodden == false)
+		App->renderer->Blit(spritesheet, 100, 553, &__18_orange->GetSprite(), NULL, 40);
+	else
+		App->renderer->Blit(spritesheet, 100, 553, &__18_orange->GetSpritefx(), NULL, 40);
+
+		//
+	
+
+
+
+
 
 	int x, y;
 	
@@ -1325,22 +1302,22 @@ update_status ModuleSceneIntro::Update()
 				__27_yellow->IsTrodden = true;
 			}
 		}
-			if (bodyA == __15_green || bodyA == __16_green) {
+		if (bodyA == __15_green || bodyA == __16_green) {
 
 
 
-				if (bodyA == __15_green) {
-					//App->player->ImproveScore(100);		
-					__15_green->IsTrodden = true;
-				}
-				if (bodyA == __16_green) {
-					//App->player->ImproveScore(100);
-					;				 __16_green->IsTrodden = true;
-				}
+			if (bodyA == __15_green) {
+				//App->player->ImproveScore(100);		
+				__15_green->IsTrodden = true;
+			}
+			if (bodyA == __16_green) {
+				//App->player->ImproveScore(100);
+			 __16_green->IsTrodden = true;
+			}
 
 				App->audio->PlayFx(gg_fx, 0);//play the bonus 
 
-			}
+		}
 		if (bodyA == __1_grey || bodyA == __3_grey || bodyA == __5_grey ||
 			bodyA == __7_grey || bodyA == __8_grey || bodyA == __10_grey ||
 			bodyA == __25_grey || bodyA == __15_green || bodyA == __16_green) {

@@ -9,11 +9,10 @@
 ModuleAudio::ModuleAudio(Application* app, bool start_enabled) : Module(app, start_enabled), music(NULL)
 {}
 
-// Destructor
+
 ModuleAudio::~ModuleAudio()
 {}
 
-// Called before render is available
 bool ModuleAudio::Init()
 {
 	LOG("Loading Audio Mixer");
@@ -24,10 +23,10 @@ bool ModuleAudio::Init()
 	{
 		LOG("SDL_INIT_AUDIO could not initialize! SDL_Error: %s\n", SDL_GetError());
 		Disable();
-		return true; // Ugly patch for class computers without audio :(
+		return true; 
 	}
 
-	// load support for the OGG format
+
 	int flags = MIX_INIT_OGG;
 	int init = Mix_Init(flags);
 
@@ -37,7 +36,7 @@ bool ModuleAudio::Init()
 		ret = false;
 	}
 
-	//Initialize SDL_mixer
+	
 	if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 	{
 		LOG("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
@@ -47,7 +46,6 @@ bool ModuleAudio::Init()
 	return ret;
 }
 
-// Called before quitting
 bool ModuleAudio::CleanUp()
 {
 	LOG("Freeing sound FX, closing Mixer and Audio subsystem");
@@ -71,7 +69,6 @@ bool ModuleAudio::CleanUp()
 	return true;
 }
 
-// Play a music file
 bool ModuleAudio::PlayMusic(const char* path, float fade_time)
 {
 	if(IsEnabled() == false)
@@ -90,7 +87,7 @@ bool ModuleAudio::PlayMusic(const char* path, float fade_time)
 			Mix_HaltMusic();
 		}
 
-		// this call blocks until fade out is done
+	
 		Mix_FreeMusic(music);
 	}
 

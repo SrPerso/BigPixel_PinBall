@@ -114,11 +114,21 @@ bool ModulePhysics::Start()
 	};
 	
 	CreateChain(0, 0, eyebrow2, 44, b2_staticBody);
+	
+	int lastone[12]{
+		299, 177,
+		312, 170,
+		320, 185,
+		359, 211,
+		349, 227,
+		309, 204
+	};
+	CreateChain(0, 0, lastone, 12, b2_staticBody);
 		
 	return true;
 }
 
-// 
+
 update_status ModulePhysics::PreUpdate()
 {
 	world->Step(1.0f / 60.0f, 6, 2);
@@ -322,7 +332,7 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size, b2Body
 	return pbody;
 }
 
-// 
+
 update_status ModulePhysics::PostUpdate()
 {
 	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
@@ -505,7 +515,7 @@ int PhysBody::RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& no
 	{
 		if(fixture->GetShape()->RayCast(&output, input, body->GetTransform(), 0) == true)
 		{
-			// do we want the normal ?
+			
 
 			float fx = x2 - x1;
 			float fy = y2 - y1;
@@ -604,5 +614,5 @@ void ModulePhysics::CreateUpJoint(PhysBody* bodyA, PhysBody* bodyB, b2Vec2 ancor
 
 	joint = (b2PrismaticJoint*)world->CreateJoint(&definition);
 
-	//return joint;
+
 }

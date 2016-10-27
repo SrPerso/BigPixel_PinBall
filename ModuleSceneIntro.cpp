@@ -59,7 +59,7 @@ bool ModuleSceneIntro::Start()
 
 	MasterCreator();//create stage
 
-	//sensor combo balls
+	
 
 	App->audio->PlayFx(game_bso, 20);
 
@@ -135,7 +135,7 @@ update_status ModuleSceneIntro::Update()
 		leftkicker1.body->GetPosition(clicker1x, clicker1y);
 		App->renderer->Blit(background, 0, 0);
 
-		//blit puller
+		
 		App->renderer->Blit(spritesheet, 500, METERS_TO_PIXELS(App->physics->joint->GetBodyB()->GetPosition().y) - 35, &_puller->GetSprite());
 
 
@@ -304,11 +304,12 @@ update_status ModuleSceneIntro::Update()
 		int x, y;
 		_pullerB->GetPosition(x, y);
 		App->renderer->Blit(puller_txt, x-3, y, NULL, 1.0f, RADTODEG *_pullerB->getAngle(), 58, 10);
-	
+		//Ball
 		if (ball != nullptr) {
 			ball->GetPosition(ballx, bally);
 			App->renderer->Blit(ball_texture, ballx, bally, NULL, 1.0f);
 		}
+		//Blit the texture of the combo balls:
 		if (ball2 != nullptr) {
 			ball2->GetPosition(ball2x, ball2y);
 			App->renderer->Blit(ball_texture, ball2x, ball2y, NULL, 1.0f);
@@ -330,9 +331,8 @@ update_status ModuleSceneIntro::Update()
 		leftkicker3.body->GetPosition(x, y);
 		App->renderer->Blit(fliper_down_left2, x + 2, y - 8, NULL, 1.0f, RADTODEG *leftkicker3.body->getAngle() - 1, 0, 5);
 		rightkicker3.body->GetPosition(x, y);
-		App->renderer->Blit(fliper_down_right2, x - 55, y - 12, NULL, 1.0f, RADTODEG *rightkicker3.body->getAngle(), 58, 10);
-		
-		//Blit the texture of the combo balls:
+		App->renderer->Blit(fliper_down_right2, x - 55, y - 12, NULL, 1.0f, RADTODEG *rightkicker3.body->getAngle(), 58, 10);		
+	
 		
 		//Change the Sensor into a Chain:
 		if (sensored == true) {
@@ -345,12 +345,12 @@ update_status ModuleSceneIntro::Update()
 			}
 		}
 		//Creating the first ball of combo
+
 		if (isball1 == true) {
 			collisioned = true;
 			CurrentTime = SDL_GetTicks();
 			if (CurrentTime > LastTime + 2000) {
 				ball2 = App->physics->CreateCircle(130, 160, 10, 0.5f, true, b2_dynamicBody);
-				//App->renderer->Blit(background2, 0, 0);
 				ball_2 = true;
 				ball2->listener = this;
 				isball1 = false;
@@ -360,11 +360,11 @@ update_status ModuleSceneIntro::Update()
 			}
 		}
 		//Creating the second ball of combo
+
 		if (isball2 == true) {
 			CurrentTime = SDL_GetTicks();
 			if (CurrentTime > LastTime + 1000) {
 				ball3 = App->physics->CreateCircle(130, 160, 10, 0.5f, true, b2_dynamicBody);
-				//App->renderer->Blit(background2, 0, 0);
 				ball_3 = true;
 				ball3->listener = this;
 				isball2 = false;
@@ -376,6 +376,7 @@ update_status ModuleSceneIntro::Update()
 		}
 
 		//DESTROY BALLS	
+
 		if (ball2 != nullptr) {
 			if (ball2y >= 1010) {
 				if (ball != nullptr || ball3 != nullptr) {
@@ -394,6 +395,7 @@ update_status ModuleSceneIntro::Update()
 				App->audio->PlayFx(dead_fx);
 			}
 		}
+
 		if (ball3 != nullptr) {
 			if (ball3y >= 1010) {
 				if (ball != nullptr || ball2 != nullptr) {
@@ -410,9 +412,9 @@ update_status ModuleSceneIntro::Update()
 					ball->listener = this;
 				}
 				App->audio->PlayFx(dead_fx);
-				//ball_3 = false;
 			}
 		}
+
 		if (ball != nullptr) {
 			if (bally >= 1010) {
 				if (ball3 != nullptr || ball2 != nullptr) {
@@ -433,6 +435,8 @@ update_status ModuleSceneIntro::Update()
 		}
 		//INPUTS:
 
+		//LEFT KICKERS:
+
 		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) {
 			
 			leftkicker1.body->Clickers_force(-360);
@@ -440,6 +444,8 @@ update_status ModuleSceneIntro::Update()
 			leftkicker3.body->Clickers_force(-360);
 			App->audio->PlayFx(kicker_left, 0);
 		}
+		//RIGHTS KICKERS:
+
 		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) {
 			
 			rightkicker1.body->Clickers_force(360);
@@ -462,10 +468,6 @@ update_status ModuleSceneIntro::Update()
 		else {
 			App->physics->joint->SetMotorSpeed(-500);
 		}
-
-
-
-
 
 		// Prepare for raycast ------------------------------------------------------
 

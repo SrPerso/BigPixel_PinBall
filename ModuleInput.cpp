@@ -11,13 +11,11 @@ ModuleInput::ModuleInput(Application* app, bool start_enabled) : Module(app, sta
 	memset(mouse_buttons, KEY_IDLE, sizeof(KEY_STATE) * MAX_MOUSE_BUTTONS);
 }
 
-// Destructor
 ModuleInput::~ModuleInput()
 {
 	delete[] keyboard;
 }
 
-// Called before render is available
 bool ModuleInput::Init()
 {
 	LOG("Init SDL input event system");
@@ -33,7 +31,6 @@ bool ModuleInput::Init()
 	return ret;
 }
 
-// Called every draw update
 update_status ModuleInput::PreUpdate()
 {
 	SDL_PumpEvents();
@@ -86,7 +83,6 @@ update_status ModuleInput::PreUpdate()
 	return UPDATE_CONTINUE;
 }
 
-// Called before quitting
 bool ModuleInput::CleanUp()
 {
 	LOG("Quitting SDL input event subsystem");

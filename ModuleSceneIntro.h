@@ -68,10 +68,7 @@ public:
 	PhysBody* __27_yellow;//sensor
 	PhysBody* ball_sensor_stop;
 
-	//SENSOR BALLAS
-	//PhysBody* sensor_ball;
-
-	//
+	
 
 	PhysBody* __background;
 	PhysBody*  __tubetop;
@@ -89,7 +86,7 @@ public:
 	bool one = false;
 	bool ball_2 = false;
 	bool ball_3 = false;
-	//bool sensorss = false;
+	
 
 	uint LastTime = 0, CurrentTime;
 
@@ -147,7 +144,7 @@ public:
 	int clicker1x;
 	int clicker1y;
 
-	//
+	//kickers
 	Object ball_obj;
 
 	Object leftkicker1;

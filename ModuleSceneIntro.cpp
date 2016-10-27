@@ -28,16 +28,18 @@ bool ModuleSceneIntro::Start()
 
 	//CAMERA
 	App->renderer->camera.x = App->renderer->camera.y = 0;
-	
+
 	//LOAD TEXTURES
 	background = App->textures->Load("pinball/Images/Ground/background.png");
 	spritesheet = App->textures->Load("pinball/Images/sprite_sheet.png");
 	background2 = App->textures->Load("pinball/Images/Ground/frontground.png");
-	ball_texture= App->textures->Load("pinball/Images/Ground/ball.png");
-	fliper_down_left= App->textures->Load("pinball/Images/fliper_down_left.png");
+	ball_texture = App->textures->Load("pinball/Images/Ground/ball.png");
+	fliper_down_left = App->textures->Load("pinball/Images/fliper_down_left.png");
 	fliper_down_right = App->textures->Load("pinball/Images/fliper_down_rigth.png");
 	fliper_down_left2 = App->textures->Load("pinball/Images/fliper_middle_up_left.png");
 	fliper_down_right2 = App->textures->Load("pinball/Images/fliper_middle_up_rigth.png");
+
+	Game_Over = App->textures->Load("pinball/Images/Game_over.png");
 
 	//LOAD AUDIOS
 	hitWall_fx = App->audio->LoadFx("pinball/Audio/HitBallWall.wav");
@@ -50,10 +52,10 @@ bool ModuleSceneIntro::Start()
 	combo_balls_release = App->audio->LoadFx("pinball/Audio/Combo_Release.wav");
 
 	MasterCreator();//create stage
-	
+
 	//sensor combo balls
 
-	App->audio->PlayFx(game_bso,20);
+	App->audio->PlayFx(game_bso, 20);
 
 	return ret;
 }
@@ -65,7 +67,7 @@ bool ModuleSceneIntro::CleanUp()
 
 
 
-
+	Game_Over = false;
 	__1_grey->IsTrodden = false;
 	__3_grey->IsTrodden = false;
 	__5_grey->IsTrodden = false;
@@ -111,392 +113,406 @@ update_status ModuleSceneIntro::Update()
 {
 
 	if (App->player->GetBalls() == 0) {
-		CleanUp();
+		
+	
+
+		if (Game_over==false) {
+			LastTime = SDL_GetTicks();
+			Game_over = true;
+		}	
+	
+		LosCondition();
+		
 	}
-	leftkicker1.body->GetPosition(clicker1x, clicker1y);
-	App->renderer->Blit(background, 0, 0);
-
-	//blit puller
-	App->renderer->Blit(spritesheet, 500, METERS_TO_PIXELS(App->physics->joint->GetBodyB()->GetPosition().y) - 35, &_puller->GetSprite());
-
-
-
-	//BLIT OF ALL TEXTURES:
-	if (__1_grey->IsTrodden == false)
-		App->renderer->Blit(spritesheet, 253, 135, &__1_grey->GetSprite());
-	else
-		App->renderer->Blit(spritesheet, 253, 135, &__1_grey->GetSpritefx());
-
-	//
-	if (__3_grey->IsTrodden == false)
-		App->renderer->Blit(spritesheet, 413, 65, &__3_grey->GetSprite());
-	else
-		App->renderer->Blit(spritesheet, 413, 65, &__3_grey->GetSpritefx());
-
-	//
-	if (__5_grey->IsTrodden == false)
-		App->renderer->Blit(spritesheet, 335, 133, &__5_grey->GetSprite());
-	else
-		App->renderer->Blit(spritesheet, 335, 133, &__5_grey->GetSpritefx());
-
-	//
-	if (__6_black->IsTrodden == false)
-		App->renderer->Blit(spritesheet, 398, 116, &__6_black->GetSprite());
-	else
-		App->renderer->Blit(spritesheet, 398, 116, &__6_black->GetSpritefx());
-
-	//
-	if (__7_grey->IsTrodden == false)
-		App->renderer->Blit(spritesheet, 470, 133, &__7_grey->GetSprite());
-	else
-		App->renderer->Blit(spritesheet, 470, 133, &__7_grey->GetSpritefx());
-
-	//
-	if (__8_grey->IsTrodden == false)
-		App->renderer->Blit(spritesheet, 503, 236, &__8_grey->GetSprite());
-	else
-		App->renderer->Blit(spritesheet, 503, 236, &__8_grey->GetSpritefx());
-
-	//
-	if (__10_grey->IsTrodden == false)
-		App->renderer->Blit(spritesheet, 118, 288, &__10_grey->GetSprite());
 	else {
-		App->renderer->Blit(spritesheet, 118, 288, &__10_grey->GetSpritefx());
 
-		//__10_grey->IsTrodden == false;
-	}
+		leftkicker1.body->GetPosition(clicker1x, clicker1y);
+		App->renderer->Blit(background, 0, 0);
 
-	if (__12_black->IsTrodden == false)
-		App->renderer->Blit(spritesheet, 272, 304, &__12_black->GetSprite());
-	else
-		App->renderer->Blit(spritesheet, 272, 304, &__12_black->GetSpritefx());
-	//
-	//if (__15_green->IsTrodden == false)
+		//blit puller
+		App->renderer->Blit(spritesheet, 500, METERS_TO_PIXELS(App->physics->joint->GetBodyB()->GetPosition().y) - 35, &_puller->GetSprite());
+
+
+
+		//BLIT OF ALL TEXTURES:
+		if (__1_grey->IsTrodden == false)
+			App->renderer->Blit(spritesheet, 253, 135, &__1_grey->GetSprite());
+		else
+			App->renderer->Blit(spritesheet, 253, 135, &__1_grey->GetSpritefx());
+
+		//
+		if (__3_grey->IsTrodden == false)
+			App->renderer->Blit(spritesheet, 413, 65, &__3_grey->GetSprite());
+		else
+			App->renderer->Blit(spritesheet, 413, 65, &__3_grey->GetSpritefx());
+
+		//
+		if (__5_grey->IsTrodden == false)
+			App->renderer->Blit(spritesheet, 335, 133, &__5_grey->GetSprite());
+		else
+			App->renderer->Blit(spritesheet, 335, 133, &__5_grey->GetSpritefx());
+
+		//
+		if (__6_black->IsTrodden == false)
+			App->renderer->Blit(spritesheet, 398, 116, &__6_black->GetSprite());
+		else
+			App->renderer->Blit(spritesheet, 398, 116, &__6_black->GetSpritefx());
+
+		//
+		if (__7_grey->IsTrodden == false)
+			App->renderer->Blit(spritesheet, 470, 133, &__7_grey->GetSprite());
+		else
+			App->renderer->Blit(spritesheet, 470, 133, &__7_grey->GetSpritefx());
+
+		//
+		if (__8_grey->IsTrodden == false)
+			App->renderer->Blit(spritesheet, 503, 236, &__8_grey->GetSprite());
+		else
+			App->renderer->Blit(spritesheet, 503, 236, &__8_grey->GetSpritefx());
+
+		//
+		if (__10_grey->IsTrodden == false)
+			App->renderer->Blit(spritesheet, 118, 288, &__10_grey->GetSprite());
+		else {
+			App->renderer->Blit(spritesheet, 118, 288, &__10_grey->GetSpritefx());
+
+			//__10_grey->IsTrodden == false;
+		}
+
+		if (__12_black->IsTrodden == false)
+			App->renderer->Blit(spritesheet, 272, 304, &__12_black->GetSprite());
+		else
+			App->renderer->Blit(spritesheet, 272, 304, &__12_black->GetSpritefx());
+		//
+		//if (__15_green->IsTrodden == false)
 
 		App->renderer->Blit(spritesheet, 435, 342, &__15_green->GetSprite());
 
-	/*else
-		App->renderer->Blit(spritesheet, 395, 304, &__15_green->GetSpritefx());*/
+		/*else
+			App->renderer->Blit(spritesheet, 395, 304, &__15_green->GetSpritefx());*/
 
-	//
-	//if (__16_green->IsTrodden == false)
+			//
+			//if (__16_green->IsTrodden == false)
 		App->renderer->Blit(spritesheet, 290, 468, &__16_green->GetSprite());
-	//else
-	//	App->renderer->Blit(spritesheet, 250, 430, &__16_green->GetSpritefx());
+		//else
+		//	App->renderer->Blit(spritesheet, 250, 430, &__16_green->GetSpritefx());
 
-	//
-	if (__19_pink->IsTrodden == false)
-		App->renderer->Blit(spritesheet, 245, 588, &__19_pink->GetSprite());
-	else
-		App->renderer->Blit(spritesheet, 245, 588, &__19_pink->GetSpritefx());
+		//
+		if (__19_pink->IsTrodden == false)
+			App->renderer->Blit(spritesheet, 245, 588, &__19_pink->GetSprite());
+		else
+			App->renderer->Blit(spritesheet, 245, 588, &__19_pink->GetSpritefx());
 
-	//
-	if (__20_yellow->IsTrodden == false)
-		App->renderer->Blit(spritesheet, 126, 613, &__20_yellow->GetSprite());
-	else
-		App->renderer->Blit(spritesheet, 126, 613, &__20_yellow->GetSpritefx());
+		//
+		if (__20_yellow->IsTrodden == false)
+			App->renderer->Blit(spritesheet, 126, 613, &__20_yellow->GetSprite());
+		else
+			App->renderer->Blit(spritesheet, 126, 613, &__20_yellow->GetSpritefx());
 
-	//
-	if (__21_red->IsTrodden == false)
-		App->renderer->Blit(spritesheet, 373, 619, &__21_red->GetSprite());
-	else
-		App->renderer->Blit(spritesheet, 373, 619, &__21_red->GetSpritefx());
+		//
+		if (__21_red->IsTrodden == false)
+			App->renderer->Blit(spritesheet, 373, 619, &__21_red->GetSprite());
+		else
+			App->renderer->Blit(spritesheet, 373, 619, &__21_red->GetSpritefx());
 
-	//
-	if (__22_boy->IsTrodden == false)
-		App->renderer->Blit(spritesheet, 46, 780, &__22_boy->GetSprite());
-	else
-		App->renderer->Blit(spritesheet, 46, 780, &__22_boy->GetSpritefx());
+		//
+		if (__22_boy->IsTrodden == false)
+			App->renderer->Blit(spritesheet, 46, 780, &__22_boy->GetSprite());
+		else
+			App->renderer->Blit(spritesheet, 46, 780, &__22_boy->GetSpritefx());
 
-	//
-	if (__23_blue->IsTrodden == false)
-		App->renderer->Blit(spritesheet, 178, 779, &__23_blue->GetSprite());
-	else
-		App->renderer->Blit(spritesheet, 178, 779, &__23_blue->GetSpritefx());
+		//
+		if (__23_blue->IsTrodden == false)
+			App->renderer->Blit(spritesheet, 178, 779, &__23_blue->GetSprite());
+		else
+			App->renderer->Blit(spritesheet, 178, 779, &__23_blue->GetSpritefx());
 
-	//
-	if (__24_green_xp->IsTrodden == false)
-		App->renderer->Blit(spritesheet, 295, 776, &__24_green_xp->GetSprite());
-	else
-		App->renderer->Blit(spritesheet, 295, 776, &__24_green_xp->GetSpritefx());
+		//
+		if (__24_green_xp->IsTrodden == false)
+			App->renderer->Blit(spritesheet, 295, 776, &__24_green_xp->GetSprite());
+		else
+			App->renderer->Blit(spritesheet, 295, 776, &__24_green_xp->GetSpritefx());
 
-	//
-	if (__25_grey->IsTrodden == false)
-		App->renderer->Blit(spritesheet, 466, 752, &__25_grey->GetSprite());
-	else
-		App->renderer->Blit(spritesheet, 466, 752, &__25_grey->GetSpritefx());
+		//
+		if (__25_grey->IsTrodden == false)
+			App->renderer->Blit(spritesheet, 466, 752, &__25_grey->GetSprite());
+		else
+			App->renderer->Blit(spritesheet, 466, 752, &__25_grey->GetSpritefx());
 
-	//
-	if (__26_girl->IsTrodden == false)
-		App->renderer->Blit(spritesheet, 426, 780, &__26_girl->GetSprite());
-	else
-		App->renderer->Blit(spritesheet, 426, 780, &__26_girl->GetSpritefx());
+		//
+		if (__26_girl->IsTrodden == false)
+			App->renderer->Blit(spritesheet, 426, 780, &__26_girl->GetSprite());
+		else
+			App->renderer->Blit(spritesheet, 426, 780, &__26_girl->GetSpritefx());
 
-	//
-	if (__27_yellow->IsTrodden == false)
-		App->renderer->Blit(spritesheet, 241, 886, &__27_yellow->GetSprite());
-	else
-		App->renderer->Blit(spritesheet, 241, 886, &__27_yellow->GetSpritefx());
-	//
+		//
+		if (__27_yellow->IsTrodden == false)
+			App->renderer->Blit(spritesheet, 241, 886, &__27_yellow->GetSprite());
+		else
+			App->renderer->Blit(spritesheet, 241, 886, &__27_yellow->GetSpritefx());
+		//
 
 
-	if(__2_orange->IsTrodden==false)
-		App->renderer->Blit(spritesheet, 330, 60, &__2_orange->GetSprite(), NULL, 50);
-	else
-		App->renderer->Blit(spritesheet, 330, 60, &__2_orange->GetSpritefx(), NULL, 50);
-	//
-	if (__4_orange->IsTrodden == false)
-		App->renderer->Blit(spritesheet, 450, 60, &__4_orange->GetSprite(), NULL, 130);
-	else
-		App->renderer->Blit(spritesheet, 450, 60, &__4_orange->GetSpritefx(), NULL, 130);
-	//
-	if (__9_orange->IsTrodden == false)
-		App->renderer->Blit(spritesheet, 95, 225, &__9_orange->GetSprite(), NULL, 20);
-	else
-		App->renderer->Blit(spritesheet, 95, 225, &__9_orange->GetSpritefx(), NULL, 20);
-	//
-	if (__11_orange->IsTrodden == false)
-		App->renderer->Blit(spritesheet, 470, 275, &__11_orange->GetSprite(), NULL, 180);
-	else
-		App->renderer->Blit(spritesheet, 470, 275, &__11_orange->GetSpritefx(), NULL, 180);
-	//
-	if (__13_orange->IsTrodden == false)
-		App->renderer->Blit(spritesheet, 83, 322, &__13_orange->GetSprite(), NULL, 0);
-	else
-		App->renderer->Blit(spritesheet, 83, 322, &__13_orange->GetSpritefx(), NULL, 0);
-	//
-	if (__14_orange->IsTrodden == false)
-		App->renderer->Blit(spritesheet, 83, 372, &__14_orange->GetSprite(), NULL, 0);
-	else
-		App->renderer->Blit(spritesheet, 83, 372, &__14_orange->GetSpritefx(), NULL, 0);
-	//
-	if (__17_orange->IsTrodden == false)
-		App->renderer->Blit(spritesheet, 470, 478, &__17_orange->GetSprite(), NULL, 180);
-	else
-		App->renderer->Blit(spritesheet, 470, 478, &__17_orange->GetSpritefx(), NULL, 180);
-	//
-	if (__18_orange->IsTrodden == false)
-		App->renderer->Blit(spritesheet, 100, 553, &__18_orange->GetSprite(), NULL, 40);
-	else
-		App->renderer->Blit(spritesheet, 100, 553, &__18_orange->GetSpritefx(), NULL, 40);
+		if (__2_orange->IsTrodden == false)
+			App->renderer->Blit(spritesheet, 330, 60, &__2_orange->GetSprite(), NULL, 50);
+		else
+			App->renderer->Blit(spritesheet, 330, 60, &__2_orange->GetSpritefx(), NULL, 50);
+		//
+		if (__4_orange->IsTrodden == false)
+			App->renderer->Blit(spritesheet, 450, 60, &__4_orange->GetSprite(), NULL, 130);
+		else
+			App->renderer->Blit(spritesheet, 450, 60, &__4_orange->GetSpritefx(), NULL, 130);
+		//
+		if (__9_orange->IsTrodden == false)
+			App->renderer->Blit(spritesheet, 95, 225, &__9_orange->GetSprite(), NULL, 20);
+		else
+			App->renderer->Blit(spritesheet, 95, 225, &__9_orange->GetSpritefx(), NULL, 20);
+		//
+		if (__11_orange->IsTrodden == false)
+			App->renderer->Blit(spritesheet, 470, 275, &__11_orange->GetSprite(), NULL, 180);
+		else
+			App->renderer->Blit(spritesheet, 470, 275, &__11_orange->GetSpritefx(), NULL, 180);
+		//
+		if (__13_orange->IsTrodden == false)
+			App->renderer->Blit(spritesheet, 83, 322, &__13_orange->GetSprite(), NULL, 0);
+		else
+			App->renderer->Blit(spritesheet, 83, 322, &__13_orange->GetSpritefx(), NULL, 0);
+		//
+		if (__14_orange->IsTrodden == false)
+			App->renderer->Blit(spritesheet, 83, 372, &__14_orange->GetSprite(), NULL, 0);
+		else
+			App->renderer->Blit(spritesheet, 83, 372, &__14_orange->GetSpritefx(), NULL, 0);
+		//
+		if (__17_orange->IsTrodden == false)
+			App->renderer->Blit(spritesheet, 470, 478, &__17_orange->GetSprite(), NULL, 180);
+		else
+			App->renderer->Blit(spritesheet, 470, 478, &__17_orange->GetSpritefx(), NULL, 180);
+		//
+		if (__18_orange->IsTrodden == false)
+			App->renderer->Blit(spritesheet, 100, 553, &__18_orange->GetSprite(), NULL, 40);
+		else
+			App->renderer->Blit(spritesheet, 100, 553, &__18_orange->GetSpritefx(), NULL, 40);
 
 		//
 
-	int x, y;
-	if (ball != nullptr) {
-		ball->GetPosition(ballx, bally);
-		App->renderer->Blit(ball_texture, ballx, bally, NULL, 1.0f);
-	}	
-	App->renderer->Blit(background2, 0, 0);
-	leftkicker1.body->GetPosition(x, y);
-	App->renderer->Blit(fliper_down_left, x-3, y-17, NULL, 1.0f, RADTODEG *leftkicker1.body->getAngle() + 32, 0, 15);
-	rightkicker1.body->GetPosition(x, y);
-	App->renderer->Blit(fliper_down_right, x-75, y-17, NULL, 1.0f, RADTODEG *rightkicker1.body->getAngle() - 32, 80, 15);
-	leftkicker2.body->GetPosition(x, y);
-	App->renderer->Blit(fliper_down_left2, x+2, y-13, NULL, 1.0f, RADTODEG *leftkicker2.body->getAngle() -1, 0, 5);
-	rightkicker2.body->GetPosition(x, y);
-	App->renderer->Blit(fliper_down_right2, x-53, y-10, NULL, 1.0f, RADTODEG *rightkicker2.body->getAngle(),58,10);
-	leftkicker3.body->GetPosition(x, y);
-	App->renderer->Blit(fliper_down_left2, x + 2, y - 8, NULL, 1.0f, RADTODEG *leftkicker3.body->getAngle() - 1, 0, 5);
-	rightkicker3.body->GetPosition(x, y);
-	App->renderer->Blit(fliper_down_right2, x - 55, y - 12, NULL, 1.0f, RADTODEG *rightkicker3.body->getAngle(), 58, 10);
-	//Blit the texture of the combo balls:
-	if(ball2 != nullptr) {
-		ball2->GetPosition(ball2x, ball2y);
-		App->renderer->Blit(ball_texture, ball2x, ball2y, NULL, 1.0f);
-	}
-	if(ball3!= nullptr) {
-		ball3->GetPosition(ball3x, ball3y);
-		App->renderer->Blit(ball_texture, ball3x, ball3y, NULL, 1.0f,20.0f);
-	}
-	//Change the Sensor into a Chain:
-	if (sensored == true) {		
-		ball_sensor_stop->body->GetFixtureList()->SetSensor(false);		
-		CurrentTime = SDL_GetTicks();
-		if (CurrentTime > LastTime + 1000) {
-			ball_sensor_stop->body->GetFixtureList()->SetSensor(true);
-			sensored = false;
-			App->audio->PlayFx(combo_balls_release, 0);
+		int x, y;
+		if (ball != nullptr) {
+			ball->GetPosition(ballx, bally);
+			App->renderer->Blit(ball_texture, ballx, bally, NULL, 1.0f);
 		}
-	}
-	//Creating the first ball of combo
-	if (isball1 == true) {		
-		collisioned = true; 
-		CurrentTime = SDL_GetTicks();
-		if (CurrentTime > LastTime + 2000) {
-			ball2 = App->physics->CreateCircle(130, 160, 10, 0.5f, true, b2_dynamicBody);
-			//App->renderer->Blit(background2, 0, 0);
-			ball_2 = true;			
-			ball2->listener = this;
-			isball1 = false;
-			isball2 = true;
-			LastTime = SDL_GetTicks();
-			App->audio->PlayFx(combo_balls_release, 0);
+		if (ball2 != nullptr) {
+			ball2->GetPosition(ball2x, ball2y);
+			App->renderer->Blit(ball_texture, ball2x, ball2y, NULL, 1.0f);
 		}
-	}
-	//Creating the second ball of combo
-	if(isball2 == true){
-		CurrentTime = SDL_GetTicks();
-		if (CurrentTime > LastTime+1000) {
-			ball3 = App->physics->CreateCircle(130, 160, 10, 0.5f, true, b2_dynamicBody);
-			//App->renderer->Blit(background2, 0, 0);
-			ball_3 = true;			
-			ball3->listener = this;			
-			isball2 = false;
-			collisioned = false;
-			one = true;
-			App->audio->PlayFx(combo_balls_release, 0);
+		if (ball3 != nullptr) {
+			ball3->GetPosition(ball3x, ball3y);
+			App->renderer->Blit(ball_texture, ball3x, ball3y, NULL, 1.0f, 20.0f);
 		}
-	}
-	
-	//DESTROY BALLS	
-	if (ball2 != nullptr) {
-		if (ball2y >= 1010) {
-			if (ball != nullptr || ball3 != nullptr) {
-				App->physics->DestroyBody(ball2->body);
-				delete ball2;
-				ball2 = nullptr;
-			}
-			else {
-				App->player->RestBalls();
-				App->physics->DestroyBody(ball2->body);
-				delete ball2;
-				ball2 = nullptr;
-				ball = App->physics->CreateCircle(520, 900, 10, 0.5f, false, b2_dynamicBody);
-				ball->listener = this;
-			}
-			App->audio->PlayFx(dead_fx);
-		}
-	}
-	if (ball3 != nullptr) {
-		if (ball3y >= 1010) {
-			if (ball != nullptr || ball2 != nullptr) {
-				App->physics->DestroyBody(ball3->body);
-				delete ball3;
-				ball3 = nullptr;
-			}
-			else {
-				App->player->RestBalls();
-				App->physics->DestroyBody(ball3->body);
-				delete ball3;
-				ball3 = nullptr;
-				ball = App->physics->CreateCircle(520, 900, 10, 0.5f, false, b2_dynamicBody);
-				ball->listener = this;
-			}
-			App->audio->PlayFx(dead_fx);
-			//ball_3 = false;
-		}
-	}
-	if (ball != nullptr) {
-		if (bally >= 1010) {
-			if (ball3 != nullptr || ball2 != nullptr) {
-				App->physics->DestroyBody(ball->body);
-				delete ball;
-				ball = nullptr;
-			}
-			else {
-				App->player->RestBalls();
-				App->physics->DestroyBody(ball->body);
-				delete ball;
-				ball = nullptr;
-				ball = App->physics->CreateCircle(520, 900, 10, 0.5f, false, b2_dynamicBody);
-				ball->listener = this;
-			}
-			App->audio->PlayFx(dead_fx);
-		}
-	}
-	
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+		App->renderer->Blit(background2, 0, 0);
+		leftkicker1.body->GetPosition(x, y);
+		App->renderer->Blit(fliper_down_left, x - 3, y - 17, NULL, 1.0f, RADTODEG *leftkicker1.body->getAngle() + 32, 0, 15);
+		rightkicker1.body->GetPosition(x, y);
+		App->renderer->Blit(fliper_down_right, x - 75, y - 17, NULL, 1.0f, RADTODEG *rightkicker1.body->getAngle() - 32, 80, 15);
+		leftkicker2.body->GetPosition(x, y);
+		App->renderer->Blit(fliper_down_left2, x + 2, y - 13, NULL, 1.0f, RADTODEG *leftkicker2.body->getAngle() - 1, 0, 5);
+		rightkicker2.body->GetPosition(x, y);
+		App->renderer->Blit(fliper_down_right2, x - 53, y - 10, NULL, 1.0f, RADTODEG *rightkicker2.body->getAngle(), 58, 10);
+		leftkicker3.body->GetPosition(x, y);
+		App->renderer->Blit(fliper_down_left2, x + 2, y - 8, NULL, 1.0f, RADTODEG *leftkicker3.body->getAngle() - 1, 0, 5);
+		rightkicker3.body->GetPosition(x, y);
+		App->renderer->Blit(fliper_down_right2, x - 55, y - 12, NULL, 1.0f, RADTODEG *rightkicker3.body->getAngle(), 58, 10);
+		//Blit the texture of the combo balls:
 		
-		leftkicker1.body->Clickers_force(-360);
-		leftkicker2.body->Clickers_force(-360);
+		//Change the Sensor into a Chain:
+		if (sensored == true) {
+			ball_sensor_stop->body->GetFixtureList()->SetSensor(false);
+			CurrentTime = SDL_GetTicks();
+			if (CurrentTime > LastTime + 1000) {
+				ball_sensor_stop->body->GetFixtureList()->SetSensor(true);
+				sensored = false;
+				App->audio->PlayFx(combo_balls_release, 0);
+			}
+		}
+		//Creating the first ball of combo
+		if (isball1 == true) {
+			collisioned = true;
+			CurrentTime = SDL_GetTicks();
+			if (CurrentTime > LastTime + 2000) {
+				ball2 = App->physics->CreateCircle(130, 160, 10, 0.5f, true, b2_dynamicBody);
+				//App->renderer->Blit(background2, 0, 0);
+				ball_2 = true;
+				ball2->listener = this;
+				isball1 = false;
+				isball2 = true;
+				LastTime = SDL_GetTicks();
+				App->audio->PlayFx(combo_balls_release, 0);
+			}
+		}
+		//Creating the second ball of combo
+		if (isball2 == true) {
+			CurrentTime = SDL_GetTicks();
+			if (CurrentTime > LastTime + 1000) {
+				ball3 = App->physics->CreateCircle(130, 160, 10, 0.5f, true, b2_dynamicBody);
+				//App->renderer->Blit(background2, 0, 0);
+				ball_3 = true;
+				ball3->listener = this;
+				isball2 = false;
+				collisioned = false;
+				one = true;
+				App->audio->PlayFx(combo_balls_release, 0);
+			}
+		}
+
+		//DESTROY BALLS	
+		if (ball2 != nullptr) {
+			if (ball2y >= 1010) {
+				if (ball != nullptr || ball3 != nullptr) {
+					App->physics->DestroyBody(ball2->body);
+					delete ball2;
+					ball2 = nullptr;
+				}
+				else {
+					App->player->RestBalls();
+					App->physics->DestroyBody(ball2->body);
+					delete ball2;
+					ball2 = nullptr;
+					ball = App->physics->CreateCircle(520, 900, 10, 0.5f, false, b2_dynamicBody);
+					ball->listener = this;
+				}
+				App->audio->PlayFx(dead_fx);
+			}
+		}
+		if (ball3 != nullptr) {
+			if (ball3y >= 1010) {
+				if (ball != nullptr || ball2 != nullptr) {
+					App->physics->DestroyBody(ball3->body);
+					delete ball3;
+					ball3 = nullptr;
+				}
+				else {
+					App->player->RestBalls();
+					App->physics->DestroyBody(ball3->body);
+					delete ball3;
+					ball3 = nullptr;
+					ball = App->physics->CreateCircle(520, 900, 10, 0.5f, false, b2_dynamicBody);
+					ball->listener = this;
+				}
+				App->audio->PlayFx(dead_fx);
+				//ball_3 = false;
+			}
+		}
+		if (ball != nullptr) {
+			if (bally >= 1010) {
+				if (ball3 != nullptr || ball2 != nullptr) {
+					App->physics->DestroyBody(ball->body);
+					delete ball;
+					ball = nullptr;
+				}
+				else {
+					App->player->RestBalls();
+					App->physics->DestroyBody(ball->body);
+					delete ball;
+					ball = nullptr;
+					ball = App->physics->CreateCircle(520, 900, 10, 0.5f, false, b2_dynamicBody);
+					ball->listener = this;
+				}
+				App->audio->PlayFx(dead_fx);
+			}
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+
+			leftkicker1.body->Clickers_force(-360);
+			leftkicker2.body->Clickers_force(-360);
+			leftkicker3.body->Clickers_force(-360);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+
+			rightkicker1.body->Clickers_force(360);
+			rightkicker2.body->Clickers_force(360);
+			rightkicker3.body->Clickers_force(360);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		{
+			ray_on = !ray_on;
+			ray.x = App->input->GetMouseX();
+			ray.y = App->input->GetMouseY();
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		{
+			circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 11, 0.5f, false, b2_dynamicBody));
+			circles.getLast()->data->listener = this;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN /*&& forced == false*/) {
+			b2Vec2 vec(0, -200);
+			ball->body->ApplyForceToCenter(vec, true);
+			/*forced = true;		*/
+
+		}
+		if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN) {
+			ball = App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 10, 0.5f, false, b2_dynamicBody);
+		}
+
+		//PULLER
+		if ((App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)) {
+			App->audio->PlayFx(pull_fx);
+			App->physics->joint->SetMotorSpeed(2);
+		}
+		else if ((App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT))
+			App->physics->joint->SetMotorSpeed(6);
+
+		else if ((App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)) {
+			App->audio->PlayFx(trhow_pull_fx);
+		}
+		else {
+			App->physics->joint->SetMotorSpeed(-500);
+		}
+
+
+
+
+
+		// Prepare for raycast ------------------------------------------------------
+
+		iPoint mouse;
+		mouse.x = App->input->GetMouseX();
+		mouse.y = App->input->GetMouseY();
+		int ray_hit = ray.DistanceTo(mouse);
+
+		fVector normal(0.0f, 0.0f);
+
+		// All draw functions ------------------------------------------------------
+		p2List_item<PhysBody*>* c = circles.getFirst();
+
+
+		// ray -----------------
+		if (ray_on == true)
+		{
+			fVector destination(mouse.x - ray.x, mouse.y - ray.y);
+			destination.Normalize();
+			destination *= ray_hit;
+
+			App->renderer->DrawLine(ray.x, ray.y, ray.x + destination.x, ray.y + destination.y, 255, 255, 255);
+
+			if (normal.x != 0.0f)
+				App->renderer->DrawLine(ray.x + destination.x, ray.y + destination.y, ray.x + destination.x + normal.x * 25.0f, ray.y + destination.y + normal.y * 25.0f, 100, 255, 100);
+		}
+
+
+
+
+
+
+		//print scores
+
+		char title[100];
+		sprintf_s(title, "PepsiPinball   Points: %i, Balls: %i, Last Score: %i", App->player->GetScore(), App->player->GetBalls(), App->player->GetPreviousScore()/*score1*/);
+
+		App->window->SetTitle(title);
+
 	}
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-
-		rightkicker1.body->Clickers_force(360);
-		rightkicker2.body->Clickers_force(360);
-	}
-	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-	{
-		ray_on = !ray_on;
-		ray.x = App->input->GetMouseX();
-		ray.y = App->input->GetMouseY();
-	}
-
-	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-	{
-		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 11,0.5f, false, b2_dynamicBody));
-		circles.getLast()->data->listener = this;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN /*&& forced == false*/) {
-		b2Vec2 vec(0, -200);
-		ball->body->ApplyForceToCenter(vec, true);
-		/*forced = true;		*/
-			
-	}
-	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN) {
-		ball = App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 10, 0.5f, false, b2_dynamicBody);
-	}
-	
-	//PULLER
-	if ((App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)) {
-		App->audio->PlayFx(pull_fx);
-		App->physics->joint->SetMotorSpeed(2);
-	}
-	else if ((App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT))
-		App->physics->joint->SetMotorSpeed(6);
-
-	else if ((App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)) {
-		App->audio->PlayFx(trhow_pull_fx);
-	}
-	else {
-		App->physics->joint->SetMotorSpeed(-500);
-	}
-
-
-
-
-
-	// Prepare for raycast ------------------------------------------------------
-	
-	iPoint mouse;
-	mouse.x = App->input->GetMouseX();
-	mouse.y = App->input->GetMouseY();
-	int ray_hit = ray.DistanceTo(mouse);
-
-	fVector normal(0.0f, 0.0f);
-
-	// All draw functions ------------------------------------------------------
-	p2List_item<PhysBody*>* c = circles.getFirst();
-	
-
-	// ray -----------------
-	if(ray_on == true)
-	{
-		fVector destination(mouse.x-ray.x, mouse.y-ray.y);
-		destination.Normalize();
-		destination *= ray_hit;
-
-		App->renderer->DrawLine(ray.x, ray.y, ray.x + destination.x, ray.y + destination.y, 255, 255, 255);
-
-		if(normal.x != 0.0f)
-			App->renderer->DrawLine(ray.x + destination.x, ray.y + destination.y, ray.x + destination.x + normal.x * 25.0f, ray.y + destination.y + normal.y * 25.0f, 100, 255, 100);
-	}
-
-
-
-
-
-
-	//print scores
-
-	char title[100];
-	sprintf_s(title, "PepsiPinball   Points: %i, Balls: %i, Last Score: %i", App->player->GetScore(), App->player->GetBalls(),App->player->GetPreviousScore()/*score1*/);
-	
-	App->window->SetTitle(title);
-
-
 
 	return UPDATE_CONTINUE;
 }
@@ -1524,3 +1540,23 @@ update_status ModuleSceneIntro::Update()
 
 
 	}
+
+
+	void ModuleSceneIntro::LosCondition() {
+		CurrentTime = SDL_GetTicks();
+		//while(CurrentTime)
+		App->renderer->Blit(Game_Over, 0, 0, NULL);
+
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || CurrentTime > LastTime + 8000) {
+
+			CleanUp();
+
+		}
+	}
+
+
+
+
+
+
+	

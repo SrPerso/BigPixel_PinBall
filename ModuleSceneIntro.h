@@ -26,6 +26,7 @@ public:
 
 	void MasterCreator();
 	void AnimationsCreator();
+	void LosCondition();
 
 public:
 	p2List<PhysBody*> circles;
@@ -76,6 +77,7 @@ public:
 	PhysBody*  __tubetop;
 	PhysBody*  __tubebottom;
 
+	bool Game_over=false;
 	bool sensed;
 	PhysBody *ball;
 	PhysBody *ball2;
@@ -107,6 +109,7 @@ public:
 	SDL_Texture* fliper_down_right;
 	SDL_Texture* fliper_down_left2;
 	SDL_Texture* fliper_down_right2;
+	SDL_Texture* Game_Over;
 	//
 	//AUDIO----
 	uint hitWall_fx;

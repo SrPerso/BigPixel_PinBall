@@ -503,7 +503,7 @@ update_status ModuleSceneIntro::Update()
 		//print scores
 
 		char title[100];
-		sprintf_s(title, "PepsiPinball   Points: %i, Balls: %i, Last Score: %i", App->player->GetScore(), App->player->GetBalls(), App->player->GetPreviousScore()/*score1*/);
+		sprintf_s(title, "BigPixel Pinball   Points: %i,		Balls: %i,		Last Score: %i", App->player->GetScore(), App->player->GetBalls(), App->player->GetPreviousScore()/*score1*/);
 
 		App->window->SetTitle(title);
 

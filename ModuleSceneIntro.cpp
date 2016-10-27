@@ -55,6 +55,8 @@ bool ModuleSceneIntro::Start()
 	pull_fx= App->audio->LoadFx("pinball/Audio/pullbar_fx.wav");
 	throw_pull_fx= App->audio->LoadFx("pinball/Audio/pullbar_fx2.wav");
 
+	black_fx = App->audio->LoadFx("pinball/Audio/black_fx.wav");
+
 	MasterCreator();//create stage
 
 	//sensor combo balls
@@ -188,18 +190,18 @@ update_status ModuleSceneIntro::Update()
 		else
 			App->renderer->Blit(spritesheet, 272, 304, &__12_black->GetSpritefx());
 		//
-		//if (__15_green->IsTrodden == false)
-
+		if (__15_green->IsTrodden == false)
 		App->renderer->Blit(spritesheet, 435, 342, &__15_green->GetSprite());
 
-		/*else
-			App->renderer->Blit(spritesheet, 395, 304, &__15_green->GetSpritefx());*/
+		else
+			App->renderer->Blit(spritesheet, 395, 304, &__15_green->GetSpritefx());
 
-			//
-			//if (__16_green->IsTrodden == false)
+			
+			if (__16_green->IsTrodden == false)
 		App->renderer->Blit(spritesheet, 290, 468, &__16_green->GetSprite());
-		//else
-		//	App->renderer->Blit(spritesheet, 250, 430, &__16_green->GetSpritefx());
+
+		else
+			App->renderer->Blit(spritesheet, 250, 430, &__16_green->GetSpritefx());
 
 		//
 		if (__19_pink->IsTrodden == false)
@@ -429,6 +431,7 @@ update_status ModuleSceneIntro::Update()
 				App->audio->PlayFx(dead_fx);
 			}
 		}
+		//INPUTS:
 
 		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) {
 			
@@ -443,29 +446,7 @@ update_status ModuleSceneIntro::Update()
 			rightkicker2.body->Clickers_force(360);
 			rightkicker3.body->Clickers_force(360);
 			App->audio->PlayFx(kicker_right, 0);
-		}
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-		{
-			ray_on = !ray_on;
-			ray.x = App->input->GetMouseX();
-			ray.y = App->input->GetMouseY();
-		}
-
-		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-		{
-			circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 11, 0.5f, false, b2_dynamicBody));
-			circles.getLast()->data->listener = this;
-		}
-
-		if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN /*&& forced == false*/) {
-			b2Vec2 vec(0, -200);
-			ball->body->ApplyForceToCenter(vec, true);
-			/*forced = true;		*/
-
-		}
-		if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN) {
-			ball = App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 10, 0.5f, false, b2_dynamicBody);
-		}
+		}		
 
 		//PULLER
 		if ((App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)) {
@@ -532,6 +513,22 @@ update_status ModuleSceneIntro::Update()
 void ModuleSceneIntro::OnCollision(PhysBody* bodyB, PhysBody* bodyA)
 {
 
+	if (bodyA == __12_black || bodyA == __6_black) {
+		if (bodyA == __12_black) {
+			App->player->ImproveScore(100);
+			App->audio->PlayFx(black_fx, 0);
+			__12_black->IsTrodden = true;
+		}
+		if (bodyA == __6_black) {
+			App->player->ImproveScore(100);
+			App->audio->PlayFx(black_fx, 0);
+		
+			__6_black->IsTrodden = true;
+		}
+
+
+
+	}
 
 	//-----------------------------------------------------------------------------------------------------------------
 	if (bodyA == __19_pink || bodyA == __20_yellow || bodyA == __21_red || bodyA == __22_boy ||
@@ -578,6 +575,13 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyB, PhysBody* bodyA)
 			App->player->ImproveScore(200);
 			__22_boy->IsTrodden = true;
 		}
+		else if (bodyA == __26_girl) {
+
+			App->player->ImproveScore(100);
+
+			__26_girl->IsTrodden = true;	
+			__26_girl->IsTrodden = true;
+		}
 
 		else if (bodyA == __23_blue) {
 			App->player->ImproveScore(100);
@@ -615,15 +619,6 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyB, PhysBody* bodyA)
 	}
 
 	//-----------------------------------------------------------------------------------------------------------------
-	if (bodyA == __15_green || bodyA == __16_green) {
-
-
-		App->audio->PlayFx(gg_fx, 0);//play the bonus
-		App->player->ImproveScore(100);
-
-
-		}
-		//-----------------------------------------------------------------------------------------------------------------
 		if (bodyA == __1_grey || bodyA == __3_grey || bodyA == __5_grey ||
 			bodyA == __7_grey || bodyA == __8_grey || bodyA == __10_grey ||
 			bodyA == __25_grey || bodyA == __15_green || bodyA == __16_green) {
@@ -637,15 +632,34 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyB, PhysBody* bodyA)
 				App->player->ImproveScore(100);
 				__16_green->IsTrodden = true;
 			}
+			else if (bodyA == __1_grey) {
+				App->player->ImproveScore(100);
 
+			}
+			else if (bodyA == __3_grey) {
+				App->player->ImproveScore(100);
 
-			/*else if (bodyA == __1_grey)
-			else if (bodyA == __3_grey)
-			else if (bodyA == __5_grey)
-			else if (bodyA == __7_grey)
-			else if (bodyA == __8_grey)
-			else if (bodyA == __10_grey)
-			else if (bodyA == __25_grey)*/
+			}
+			else if (bodyA == __5_grey) {
+				App->player->ImproveScore(100);
+
+			}
+			else if (bodyA == __7_grey) {
+				App->player->ImproveScore(100);
+
+			}
+			else if (bodyA == __8_grey) {
+				App->player->ImproveScore(100);
+
+			}
+			else if (bodyA == __10_grey) {
+				App->player->ImproveScore(100);
+
+			}
+			else if (bodyA == __25_grey) {
+				App->player->ImproveScore(100);
+
+			}
 
 			App->audio->PlayFx(gg_fx);//play the bonus 							
 

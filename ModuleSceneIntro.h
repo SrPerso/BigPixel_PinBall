@@ -125,6 +125,7 @@ public:
 	uint combo_balls_release;
 	uint pull_fx;
 	uint throw_pull_fx;
+	uint black_fx;
 	uint kicker_left;
 	uint kicker_right;
 	//--------

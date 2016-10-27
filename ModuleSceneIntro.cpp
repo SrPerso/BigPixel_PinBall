@@ -70,7 +70,9 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update()
 {
 
-	ball->GetPosition(ballx, bally);
+	if (ball != nullptr) {
+		ball->GetPosition(ballx, bally);
+	}
 	leftkicker1.body->GetPosition(clicker1x, clicker1y);
 	App->renderer->Blit(background, 0, 0);
 
@@ -252,6 +254,10 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(fliper_down_left2, x+2, y-13, NULL, 1.0f, RADTODEG *leftkicker2.body->getAngle() -1, 0, 5);
 	rightkicker2.body->GetPosition(x, y);
 	App->renderer->Blit(fliper_down_right2, x-53, y-10, NULL, 1.0f, RADTODEG *rightkicker2.body->getAngle(),58,10);
+	leftkicker3.body->GetPosition(x, y);
+	App->renderer->Blit(fliper_down_left2, x + 2, y - 8, NULL, 1.0f, RADTODEG *leftkicker3.body->getAngle() - 1, 0, 5);
+	rightkicker3.body->GetPosition(x, y);
+	App->renderer->Blit(fliper_down_right2, x - 55, y - 12, NULL, 1.0f, RADTODEG *rightkicker3.body->getAngle(), 58, 10);
 	//Blit the texture of the combo balls:
 	if(ball2 != nullptr) {
 		ball2->GetPosition(ball2x, ball2y);
@@ -262,8 +268,7 @@ update_status ModuleSceneIntro::Update()
 		App->renderer->Blit(ball_texture, ball3x, ball3y, NULL, 1.0f,20.0f);
 	}
 	//Change the Sensor into a Chain:
-	if (sensored == true) {
-		
+	if (sensored == true) {		
 		ball_sensor_stop->body->GetFixtureList()->SetSensor(false);		
 		CurrentTime = SDL_GetTicks();
 		if (CurrentTime > LastTime + 1000) {
@@ -305,31 +310,62 @@ update_status ModuleSceneIntro::Update()
 	//DESTROY BALLS	
 	if (ball2 != nullptr) {
 		if (ball2y >= 1010) {
-			App->physics->DestroyBody(ball2->body);
-			delete ball2;
-			ball2 = nullptr;
+			if (ball != nullptr || ball3 != nullptr) {
+				App->physics->DestroyBody(ball2->body);
+				delete ball2;
+				ball2 = nullptr;
+			}
+			else {
+				if (balls > 0) {
+					balls - 1;
+				}
+				App->physics->DestroyBody(ball2->body);
+				delete ball2;
+				ball2 = nullptr;
+				ball = App->physics->CreateCircle(520, 900, 10, 0.5f, false, b2_dynamicBody);
+				ball->listener = this;
+			}
 			App->audio->PlayFx(dead_fx);
-			//ball_2 = false;
 		}
 	}
 	if (ball3 != nullptr) {
 		if (ball3y >= 1010) {
-			App->physics->DestroyBody(ball3->body);
-			delete ball3;
-			ball3 = nullptr;
+			if (ball != nullptr || ball2 != nullptr) {
+				App->physics->DestroyBody(ball3->body);
+				delete ball3;
+				ball3 = nullptr;
+			}
+			else {
+				if (balls > 0) {
+					balls - 1;
+				}
+				App->physics->DestroyBody(ball3->body);
+				delete ball3;
+				ball3 = nullptr;
+				ball = App->physics->CreateCircle(520, 900, 10, 0.5f, false, b2_dynamicBody);
+				ball->listener = this;
+			}
 			App->audio->PlayFx(dead_fx);
 			//ball_3 = false;
 		}
 	}
-	if ( bally >= 1010) {
-		
-		App->physics->DestroyBody(ball->body);
-		delete ball;
-		ball = nullptr;
-		ball = App->physics->CreateCircle(520, 900, 10, 0.5f, false, b2_dynamicBody);
-		ball->listener = this;
-		App->audio->PlayFx(dead_fx);	
-	
+	if (bally >= 1010) {
+		if (ball3 != nullptr || ball2 != nullptr) {
+			App->physics->DestroyBody(ball->body);
+			delete ball;
+			ball = nullptr;
+		}
+		else {
+			if (balls > 0) {
+				balls - 1;
+			}
+			App->physics->DestroyBody(ball->body);
+			delete ball;
+			ball = nullptr;
+			ball = App->physics->CreateCircle(520, 900, 10, 0.5f, false, b2_dynamicBody);
+			ball->listener = this;
+		}
+		App->audio->PlayFx(dead_fx);
 	}
 	
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
@@ -523,11 +559,11 @@ update_status ModuleSceneIntro::Update()
 
 			
 			if (bodyA == __15_green) {
-				//App->player->ImproveScore(100);		
+				App->player->ImproveScore(100);		
 				__15_green->IsTrodden = true;
 			}
 			if (bodyA == __16_green) {
-				//App->player->ImproveScore(100);
+				App->player->ImproveScore(100);
 				__16_green->IsTrodden = true;
 			}
 
@@ -549,11 +585,11 @@ update_status ModuleSceneIntro::Update()
 			bodyA == __17_orange || bodyA == __18_orange) {
 
 			if (bodyA == __2_orange) { 
-				//App->player->ImproveScore(100);		
+				App->player->ImproveScore(100);		
 				__2_orange->IsTrodden = true;
 			}
 			else if (bodyA == __4_orange) {
-				//App->player->ImproveScore(100);		
+				App->player->ImproveScore(100);		
 				__4_orange->IsTrodden = true;
 			}
 			else if (bodyA == __9_orange) {
@@ -561,23 +597,23 @@ update_status ModuleSceneIntro::Update()
 				__9_orange->IsTrodden = true;
 			}
 			else if (bodyA == __11_orange) {
-				//App->player->ImproveScore(100);		
+				App->player->ImproveScore(100);		
 				__11_orange->IsTrodden = true;
 			}
 			else if (bodyA == __13_orange) {
-				//App->player->ImproveScore(100);		
+				App->player->ImproveScore(100);		
 				__13_orange->IsTrodden = true;
 			}
 			else if (bodyA == __14_orange) {
-				//App->player->ImproveScore(100);		
+				App->player->ImproveScore(100);		
 				__14_orange->IsTrodden = true;
 			}
 			else if (bodyA == __17_orange) {
-				//App->player->ImproveScore(100);		
+				App->player->ImproveScore(100);		
 				__17_orange->IsTrodden = true;
 			}
 			else if (bodyA == __18_orange) {
-				//App->player->ImproveScore(100);		
+				App->player->ImproveScore(100);		
 				__18_orange->IsTrodden = true;
 			}
 
@@ -665,7 +701,19 @@ update_status ModuleSceneIntro::Update()
 		rightkicker2.body = App->physics->CreatePolygon(right_kicker_cods2, 6, b2_dynamicBody, 497, 603, 0.5f);
 		rightwheel2 = App->physics->CreateCircle(497, 610, 6, 0, false, b2_staticBody);
 		App->physics->CreateRevoluteJoint(rightkicker2.body->body, rightwheel2->body, 45, -5, -10, 3);
+		
+		//TOP KICKER LEFT:	
 
+		leftkicker3.body = App->physics->CreatePolygon(left_kicker_cods2, 6, b2_dynamicBody, 365, 225, 0.5f);
+		leftwheel3 = App->physics->CreateCircle(365, 225, 5, 0, false, b2_staticBody);
+		App->physics->CreateRevoluteJoint(leftkicker3.body->body, leftwheel3->body, 5, -50, 10, 3);
+
+		//TOP KICKER RIGHT:
+
+		rightkicker3.body = App->physics->CreatePolygon(right_kicker_cods2, 6, b2_dynamicBody, 475, 230, 0.5f);
+		rightwheel3 = App->physics->CreateCircle(475, 230, 5, 0, false, b2_staticBody);
+		App->physics->CreateRevoluteJoint(rightkicker3.body->body, rightwheel3->body, 45, -5, -10, 3);
+		
 		//Map:
 		//OBSTACLES:-----------------------------------------------------------
 

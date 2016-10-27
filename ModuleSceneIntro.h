@@ -121,6 +121,8 @@ public:
 	uint trhow_pull_fx;
 	//--------
 
+	uint balls = 3;
+
 	p2Point<int> ray;
 	bool ray_on;
 	bool destroyed = false;
@@ -150,6 +152,12 @@ public:
 
 	Object rightkicker2;
 	PhysBody* rightwheel2;
+
+	Object leftkicker3;
+	PhysBody* leftwheel3;
+
+	Object rightkicker3;
+	PhysBody* rightwheel3;
 
 
 	

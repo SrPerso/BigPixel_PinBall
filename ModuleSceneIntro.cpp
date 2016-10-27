@@ -50,7 +50,7 @@ bool ModuleSceneIntro::Start()
 	combo_balls_release = App->audio->LoadFx("pinball/Audio/Combo_Release.wav");
 
 	MasterCreator();//create stage
-
+	
 	//sensor combo balls
 
 	App->audio->PlayFx(game_bso,20);
@@ -70,9 +70,7 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update()
 {
 
-	if (ball != nullptr) {
-		ball->GetPosition(ballx, bally);
-	}
+	
 	leftkicker1.body->GetPosition(clicker1x, clicker1y);
 	App->renderer->Blit(background, 0, 0);
 
@@ -243,8 +241,10 @@ update_status ModuleSceneIntro::Update()
 		//
 
 	int x, y;
-	
-	App->renderer->Blit(ball_texture, ballx, bally, NULL, 1.0f);
+	if (ball != nullptr) {
+		ball->GetPosition(ballx, bally);
+		App->renderer->Blit(ball_texture, ballx, bally, NULL, 1.0f);
+	}	
 	App->renderer->Blit(background2, 0, 0);
 	leftkicker1.body->GetPosition(x, y);
 	App->renderer->Blit(fliper_down_left, x-3, y-17, NULL, 1.0f, RADTODEG *leftkicker1.body->getAngle() + 32, 0, 15);
@@ -316,9 +316,7 @@ update_status ModuleSceneIntro::Update()
 				ball2 = nullptr;
 			}
 			else {
-				if (balls > 0) {
-					balls - 1;
-				}
+				App->player->RestBalls();
 				App->physics->DestroyBody(ball2->body);
 				delete ball2;
 				ball2 = nullptr;
@@ -336,9 +334,7 @@ update_status ModuleSceneIntro::Update()
 				ball3 = nullptr;
 			}
 			else {
-				if (balls > 0) {
-					balls - 1;
-				}
+				App->player->RestBalls();
 				App->physics->DestroyBody(ball3->body);
 				delete ball3;
 				ball3 = nullptr;
@@ -349,23 +345,23 @@ update_status ModuleSceneIntro::Update()
 			//ball_3 = false;
 		}
 	}
-	if (bally >= 1010) {
-		if (ball3 != nullptr || ball2 != nullptr) {
-			App->physics->DestroyBody(ball->body);
-			delete ball;
-			ball = nullptr;
-		}
-		else {
-			if (balls > 0) {
-				balls - 1;
+	if (ball != nullptr) {
+		if (bally >= 1010) {
+			if (ball3 != nullptr || ball2 != nullptr) {
+				App->physics->DestroyBody(ball->body);
+				delete ball;
+				ball = nullptr;
 			}
-			App->physics->DestroyBody(ball->body);
-			delete ball;
-			ball = nullptr;
-			ball = App->physics->CreateCircle(520, 900, 10, 0.5f, false, b2_dynamicBody);
-			ball->listener = this;
+			else {
+				App->player->RestBalls();
+				App->physics->DestroyBody(ball->body);
+				delete ball;
+				ball = nullptr;
+				ball = App->physics->CreateCircle(520, 900, 10, 0.5f, false, b2_dynamicBody);
+				ball->listener = this;
+			}
+			App->audio->PlayFx(dead_fx);
 		}
-		App->audio->PlayFx(dead_fx);
 	}
 	
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
@@ -454,7 +450,7 @@ update_status ModuleSceneIntro::Update()
 	//print scores
 
 	char title[100];
-	sprintf_s(title, "PepsiPinball   Points: %i, Balls: **, Last Score: **", App->player->GetScore()/*, score1*/);
+	sprintf_s(title, "PepsiPinball   Points: %i, Balls: %i, Last Score: **", App->player->GetScore(), App->player->GetBalls()/*score1*/);
 	
 	App->window->SetTitle(title);
 

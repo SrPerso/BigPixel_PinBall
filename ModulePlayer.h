@@ -15,7 +15,12 @@ public:
 
 	void ImproveScore(const int& score) {this->Score += score;}
 	int GetScore() { return Score; }
+	void RestBalls() { this->Balls-=1; }
+	int GetBalls() { return Balls; }
+	int ResetBalls() { this->Balls = 3; };
+	int Balls=3;
 private:
 	int Score;
+	
 
 };

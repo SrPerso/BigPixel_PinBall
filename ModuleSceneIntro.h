@@ -121,7 +121,6 @@ public:
 	uint trhow_pull_fx;
 	//--------
 
-	uint balls = 3;
 
 	p2Point<int> ray;
 	bool ray_on;

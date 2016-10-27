@@ -918,9 +918,25 @@ bool ModuleSceneIntro::Start()
 	__tubetop = App->physics->CreateChain(0, 0, _tubetop, 98, b2_staticBody);
 	__background = App->physics->CreateChain(0, 0, _background, 150, b2_staticBody);
 
-	
+	//PULLER
+
+	//--------------------------------
+	int pos_x = 525; int pos_y = 1037;
+
+	_puller = App->physics->CreateRectangle(pos_x, pos_y, 10, 100);
+	_puller->body->SetType(b2_staticBody);
+
+	_pullerB = App->physics->CreateRectangle(pos_x, pos_y+20, 50, 70);
+	_puller->body->SetType(b2_staticBody);
+
+	App->physics->CreateUpJoint(_puller, _pullerB, b2Vec2(1, 10), b2Vec2(1, -10), -40, -120, 350, 200);
+	_pullerB->SetSprite(255, 160, 27, 163);
+	//------------------------------------
+
+
+
+
 	//sensor combo balls
-	
 	ball_sensor_stop = App->physics->CreateSensorBall(0, 0, sensor_balls_stop, 16, true);
 	App->audio->PlayFx(game_bso,20);
 
@@ -942,6 +958,12 @@ update_status ModuleSceneIntro::Update()
 	ball->GetPosition(ballx, bally);
 	leftkicker1.body->GetPosition(clicker1x, clicker1y);
 	App->renderer->Blit(background, 0, 0);
+
+	//blit puller
+	App->renderer->Blit(spritesheet, 500, METERS_TO_PIXELS(App->physics->joint->GetBodyB()->GetPosition().y) - 35, &_puller->GetSprite());
+
+
+
 	//BLIT OF ALL TEXTURES:
 	if (__1_grey->IsTrodden == false)
 		App->renderer->Blit(spritesheet, 253, 135, &__1_grey->GetSprite());
@@ -1177,6 +1199,24 @@ update_status ModuleSceneIntro::Update()
 		ball = App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 10, 0.5f, false, b2_dynamicBody);
 	}
 	
+	//PULLER
+	if ((App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)) {
+		App->audio->PlayFx(pull_fx);
+		App->physics->joint->SetMotorSpeed(2);
+	}
+	else if ((App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT))
+		App->physics->joint->SetMotorSpeed(6);
+
+	else if ((App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)) {
+		App->audio->PlayFx(trhow_pull_fx);
+	}
+	else {
+		App->physics->joint->SetMotorSpeed(-500);
+	}
+
+
+
+
 
 	// Prepare for raycast ------------------------------------------------------
 	

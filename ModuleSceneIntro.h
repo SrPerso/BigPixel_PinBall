@@ -27,14 +27,15 @@ public:
 public:
 	p2List<PhysBody*> circles;
 	p2List<PhysBody*> boxes;
-	p2List<PhysBody*> ricks;
-	
+	p2List<PhysBody*> ricks;	
 
 	PhysBody* sensor;
 	PhysBody* sensor_ball;	
-	
-	// objects
 
+	PhysBody*_puller;
+	PhysBody*_pullerB;
+
+	// objectS
 	p2List<PhysBody*> Objects;
 	PhysBody* __1_grey;
 	PhysBody* __2_orange;
@@ -115,7 +116,7 @@ public:
 	SDL_Texture* fliper_down_left2;
 	SDL_Texture* fliper_down_right2;
 	//
-	//audio
+	//AUDIO----
 	uint hitWall_fx;
 	uint bird_fx;
 	uint game_bso;
@@ -124,7 +125,9 @@ public:
 	uint bird_fx2;
 	uint combo_balls;
 	uint combo_balls_release;
-	
+	uint pull_fx;
+	uint trhow_pull_fx;
+	//--------
 
 	p2Point<int> ray;
 	bool ray_on;

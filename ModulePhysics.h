@@ -80,6 +80,8 @@ public:
 	PhysBody* CreateSensorBall(int x, int y, int* points, int size, bool sensor);
 	PhysBody* CreatePolygon(b2Vec2* vertices1, int count1, b2BodyType type, int x, int y, float Rest);
 	void CreateRevoluteJoint(b2Body* bodyA, b2Body* bodyB, int upperangle, int lowerangle, int pivot_x, int pivot_y);
+	void CreateUpJoint(PhysBody* bodyA, PhysBody* bodyB, b2Vec2 ancorA, b2Vec2 ancorB, int max, int min, int maxMotor, int motorSpeed);//ESTO-
+
 	void DestroyBody(b2Body* body);
 
 	// b2ContactListener ---
@@ -91,7 +93,7 @@ public:
 	
 	b2Body* b;
 	
-	
+	b2PrismaticJoint* joint;
 
 private:
 

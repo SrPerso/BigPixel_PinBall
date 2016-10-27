@@ -114,17 +114,7 @@ bool ModulePhysics::Start()
 	};
 	
 	CreateChain(0, 0, eyebrow2, 44, b2_staticBody);
-	//PRUEBA:
-	int line[6] = {
-		530, 900,
-		501, 900,
-		500,900,
-	};	
-	CreateChain(0, 0, line, 6, b2_staticBody);
-	//--------------------
-	
-
-	
+		
 	return true;
 }
 
@@ -590,4 +580,28 @@ void ModulePhysics::CreateRevoluteJoint(b2Body* bodyA, b2Body* bodyB, int uppera
 }
 double PhysBody::getAngle() const {
 	return body->GetAngle();
+}
+
+void ModulePhysics::CreateUpJoint(PhysBody* bodyA, PhysBody* bodyB, b2Vec2 ancorA, b2Vec2 ancorB, int max, int min, int maxMotor, int motorSpeed)
+{
+	b2PrismaticJointDef definition;
+	definition.bodyA = bodyA->body;
+	definition.bodyB = bodyB->body;
+	definition.collideConnected = false;
+	definition.localAxisA.Set(0, 1);
+	definition.localAnchorA.Set(PIXEL_TO_METERS(ancorA.x), PIXEL_TO_METERS(ancorA.y));
+	definition.localAnchorB.Set(PIXEL_TO_METERS(ancorB.x), PIXEL_TO_METERS(ancorB.y));
+
+	definition.enableLimit = true;
+	definition.lowerTranslation = PIXEL_TO_METERS(min);
+	definition.upperTranslation = PIXEL_TO_METERS(max);
+	definition.type = e_prismaticJoint;
+
+	definition.enableMotor = true;
+	definition.motorSpeed = motorSpeed * DEGTORAD;
+	definition.maxMotorForce = maxMotor;
+
+	joint = (b2PrismaticJoint*)world->CreateJoint(&definition);
+
+	//return joint;
 }

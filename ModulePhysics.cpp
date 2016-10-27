@@ -629,6 +629,7 @@ PhysBody* ModulePhysics::CreatePolygon(b2Vec2* vertices1, int count1, b2BodyType
 {
 	b2BodyDef polygonbody;
 	polygonbody.type = type;
+	polygonbody.bullet = true;
 	polygonbody.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
 	b2Body* body = world->CreateBody(&polygonbody);
@@ -661,4 +662,7 @@ void ModulePhysics::CreateRevoluteJoint(b2Body* bodyA, b2Body* bodyB, int uppera
 	definition.upperAngle = DEGTORAD * upperangle;
 	definition.lowerAngle = DEGTORAD * lowerangle;
 	world->CreateJoint(&definition);
+}
+double PhysBody::getAngle() const {
+	return body->GetAngle();
 }

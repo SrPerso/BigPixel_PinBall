@@ -11,13 +11,9 @@ public:
 
 	bool Start();
 	update_status Update();
-
 	bool CleanUp();
-	void ImproveScore(const int& score) {
-		this->Score += score;
-	}
 
 public:
-	int Score;
+	
 
 };

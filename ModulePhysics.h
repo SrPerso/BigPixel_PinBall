@@ -25,15 +25,15 @@ public:
 	bool Contains(int x, int y) const;
 	int RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& normal_y) const;
 	void Clickers_force(int degrees);
-
-	void SetSprite(const int&  x,const int & y,const int&  w,const int& h) {
+	double getAngle() const;
+	void SetSprite(const int&  x, const int & y, const int&  w, const int& h) {
 		sprite.h = h;
 		sprite.w = w;
 		sprite.x = x;
 		sprite.y = y;
 	}
 
-	void SetSpritefx(const int&  x, const int & y, const int&  w, const int& h){
+	void SetSpritefx(const int&  x, const int & y, const int&  w, const int& h) {
 
 		spritefx.h = h;
 		spritefx.w = w;
@@ -46,6 +46,7 @@ public:
 	SDL_Rect& GetSpritefx() {
 		return spritefx;
 	}
+	
 public:
 	int width, height;
 	b2Body* body;
@@ -53,7 +54,6 @@ public:
 	bool IsTrodden = false;
 	SDL_Rect sprite;
 	SDL_Rect spritefx;
-
 
 };
 

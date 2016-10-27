@@ -13,7 +13,9 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-public:
-	
+	void ImproveScore(const int& score) {this->Score += score;}
+	int GetScore() { return Score; }
+private:
+	int Score;
 
 };

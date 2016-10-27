@@ -24,6 +24,9 @@ public:
 	bool CleanUp();
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
+	void MasterCreator();
+	void AnimationsCreator();
+
 public:
 	p2List<PhysBody*> circles;
 	p2List<PhysBody*> boxes;
@@ -35,8 +38,6 @@ public:
 	PhysBody*_puller;
 	PhysBody*_pullerB;
 
-	// objectS
-	p2List<PhysBody*> Objects;
 	PhysBody* __1_grey;
 	PhysBody* __2_orange;
 	PhysBody* __3_grey;
@@ -62,24 +63,15 @@ public:
 	PhysBody* __23_blue;//sensor
 	PhysBody* __24_green_xp;//sensor
 	PhysBody* __25_grey;
-	//PhysBody* __26_girl;//sensor
+	PhysBody* __26_girl;//sensor
 	PhysBody* __27_yellow;//sensor
 	PhysBody* ball_sensor_stop;
-	//sensor balls
+
+	//SENSOR BALLAS
 	//PhysBody* sensor_ball;
-	int sensor_balls_stop[16] = {
-		88, 133,
-		105, 127,
-		118, 154,
-		120, 159,
-		148, 144,
-		154, 156,
-		104, 179,
-		90, 139
-	};
+
 	//
-	
-	
+
 	PhysBody* __background;
 	PhysBody*  __tubetop;
 	PhysBody*  __tubebottom;
